@@ -1,0 +1,61 @@
+{
+  "appName": "System Control",
+  "ok": "Ok",
+  "cancel": "Cancel",
+  "yes": "Yes",
+  "no": "No",
+  "exit": "Exit",
+  "submit": "Submit",
+  "save": "Save",
+  "success": "Success",
+  "pleaseWait": "Please wait",
+  "somethingWentWrong": "Something went wrong",
+  "somethingWentWrongDesc": "Please co-operate with us, we will fix it as soon as possible and update you.",
+  "noDataFound": "No data found",
+  "checkInternet": "Please check your internet connection and try again!",
+  "noInternet": "No Internet Available",
+
+  "dashboard": "Dashboard",
+  "thermostat": "Thermostat",
+  "schedules": "Schedules",
+  "history": "History",
+  "settings": "Settings",
+
+  "target": "TARGET",
+  "indoor": "Indoor",
+  "outdoor": "Outdoor",
+  "humidity": "Humidity",
+  "temperature": "Temperature",
+  "temp": "Temp",
+
+  "zoneComparison": "Zone Comparison",
+  "energyCost": "Energy Cost",
+  "energyUsage": "Energy Usage",
+  "modeDistribution": "Mode Distribution",
+  "scheduleActivity": "Schedule Activity",
+
+  "fanSpeed": "FAN SPEED",
+  "energy": "Energy",
+  "airQuality": "Air Quality",
+  "cost": "Cost",
+  "efficiency": "Efficiency",
+
+  "min": "Min",
+  "avg": "Avg",
+  "max": "Max",
+  "total": "Total",
+  "dailyAvg": "Daily Avg",
+  "rate": "Rate",
+  "thisYear": "This Year",
+  "lastYear": "Last Year",
+  "change": "Change",
+  "hours": "hours",
+  "runs": "runs",
+
+  "invalidValue": "Invalid value for {label}",
+  "@invalidValue": {
+    "placeholders": {
+      "label": {}
+    }
+  }
+}
