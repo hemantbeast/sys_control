@@ -152,8 +152,16 @@ final darkTheme = ThemeData(
     ),
   ),
   switchTheme: SwitchThemeData(
-    trackColor: WidgetStatePropertyAll(_darkColorScheme.secondaryContainer),
-    thumbColor: WidgetStatePropertyAll(_darkColorScheme.secondary),
+    trackColor: WidgetStateProperty.resolveWith(
+      (states) => states.contains(WidgetState.selected)
+          ? _darkColorScheme.secondaryContainer
+          : _darkColorScheme.surfaceContainerHighest,
+    ),
+    thumbColor: WidgetStateProperty.resolveWith(
+      (states) => states.contains(WidgetState.selected)
+          ? _darkColorScheme.secondary
+          : _darkColorScheme.outline,
+    ),
   ),
   bottomSheetTheme: const BottomSheetThemeData(
     backgroundColor: darkSurfaceColor,

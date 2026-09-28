@@ -151,8 +151,16 @@ final lightTheme = ThemeData(
     ),
   ),
   switchTheme: SwitchThemeData(
-    trackColor: WidgetStatePropertyAll(_lightColorScheme.secondaryContainer),
-    thumbColor: WidgetStatePropertyAll(_lightColorScheme.secondary),
+    trackColor: WidgetStateProperty.resolveWith(
+      (states) => states.contains(WidgetState.selected)
+          ? _lightColorScheme.secondaryContainer
+          : _lightColorScheme.surfaceContainerHighest,
+    ),
+    thumbColor: WidgetStateProperty.resolveWith(
+      (states) => states.contains(WidgetState.selected)
+          ? _lightColorScheme.secondary
+          : _lightColorScheme.outline,
+    ),
   ),
   bottomSheetTheme: const BottomSheetThemeData(
     backgroundColor: Colors.white,

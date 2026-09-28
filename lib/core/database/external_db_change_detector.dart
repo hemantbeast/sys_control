@@ -41,13 +41,16 @@ class ExternalDbChangeDetector {
     }
 
     final file = File(_dbPath!);
-    final stat = file.statSync();
-    if (stat.type != FileSystemEntityType.notFound) {
-      _lastMtime = stat.modified;
-    }
     _lastDataVersion = await _readDataVersion();
     if (_disposed) {
       return;
+    }
+
+    // Stat after the first version read: opening/migrating the database writes
+    // the file, and that own write must not look like an external replacement.
+    final stat = file.statSync();
+    if (stat.type != FileSystemEntityType.notFound) {
+      _lastMtime = stat.modified;
     }
 
     _pollTimer = Timer.periodic(pollInterval, (_) => _poll());
