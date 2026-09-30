@@ -5,6 +5,7 @@ import 'package:drift/native.dart';
 import 'package:flutter/services.dart' show rootBundle;
 import 'package:sys_control/core/database/db_path_resolver.dart';
 import 'package:sys_control/core/utils/sql_script_parser.dart';
+import 'package:sys_control/features/dashboard/databases/device_state_table.dart';
 import 'package:sys_control/features/schedules/databases/schedules_table.dart';
 import 'package:sys_control/features/settings/databases/setting_categories_table.dart';
 import 'package:sys_control/features/settings/databases/setting_definitions_table.dart';
@@ -20,6 +21,7 @@ part 'app_database.g.dart';
     SettingCategoriesTable,
     SettingDefinitionsTable,
     SettingValuesTable,
+    DeviceStateTable,
   ],
 )
 class AppDatabase extends _$AppDatabase {
@@ -30,7 +32,7 @@ class AppDatabase extends _$AppDatabase {
   final Future<String> Function()? _seedLoader;
 
   @override
-  int get schemaVersion => 5;
+  int get schemaVersion => 6;
 
   @override
   MigrationStrategy get migration => MigrationStrategy(
@@ -46,6 +48,9 @@ class AppDatabase extends _$AppDatabase {
           }
           if (from < 5) {
             await _migrateSchedulesNaming(m);
+          }
+          if (from < 6) {
+            await _createDeviceState(m);
           }
         },
       );
@@ -93,6 +98,15 @@ class AppDatabase extends _$AppDatabase {
       'SELECT id, name, mode, start_time, timer, is_enabled, repeat_type, repeat_days FROM schedules_table',
     );
     await customStatement('DROP TABLE schedules_table');
+  }
+
+  /// Creates the shared `device_state` table unless another app (Qt
+  /// scheduler) already created it.
+  Future<void> _createDeviceState(Migrator m) async {
+    final rows = await customSelect("SELECT name FROM sqlite_master WHERE type = 'table' AND name = 'device_state'").get();
+    if (rows.isEmpty) {
+      await m.createTable(deviceStateTable);
+    }
   }
 
   Future<void> _reseedSettingDefinitions() async {

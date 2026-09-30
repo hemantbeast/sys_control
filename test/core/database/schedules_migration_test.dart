@@ -128,8 +128,11 @@ void main() {
     final categories = await db.select(db.settingCategoriesTable).get();
     expect(categories, hasLength(1));
 
+    final tables = await db.customSelect("SELECT name FROM sqlite_master WHERE type = 'table' AND name = 'device_state'").get();
+    expect(tables, hasLength(1));
+
     final version = await db.customSelect('PRAGMA user_version').getSingle();
-    expect(version.data.values.first, 5);
+    expect(version.data.values.first, 6);
   });
 
   test('adopts a Qt database already at user_version 2 without reseeding', () async {
@@ -157,7 +160,7 @@ void main() {
     expect(values, hasLength(1));
 
     final version = await db.customSelect('PRAGMA user_version').getSingle();
-    expect(version.data.values.first, 5);
+    expect(version.data.values.first, 6);
   });
 
   test('migrates drift v4 snake_case schedules_table into Qt-shaped schedules', () async {
