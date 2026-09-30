@@ -49,6 +49,11 @@ class DbSettingsRepositoryImpl implements DbSettingsRepository {
   }
 
   @override
+  Stream<String?> watchValue(String key) {
+    return _dao.watchValue(key);
+  }
+
+  @override
   Future<bool> saveValue(String key, String value) async {
     if (!await _validate(key, value)) {
       return false;

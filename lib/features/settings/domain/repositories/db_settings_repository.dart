@@ -5,6 +5,7 @@ abstract class DbSettingsRepository {
   Stream<List<SettingCategoryEntity>> watchCategories();
   Stream<List<SettingItemEntity>> watchItems(int categoryId);
   Future<String?> getValue(String key);
+  Stream<String?> watchValue(String key);
   Future<bool> saveValue(String key, String value);
   Future<void> resetToDefaults({int? categoryId});
 }

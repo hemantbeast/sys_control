@@ -60,6 +60,22 @@ class SettingsDbDao {
     return row?.readNullable<String>('val');
   }
 
+  Stream<String?> watchValue(String key) {
+    return _db
+        .customSelect(
+          '''
+          SELECT COALESCE(sv.value, s.default_value) AS val
+          FROM settings s
+          LEFT JOIN setting_values sv ON sv.setting_key = s.key
+          WHERE s.key = ?
+          ''',
+          variables: [Variable<String>(key)],
+          readsFrom: {_db.settingDefinitionsTable, _db.settingValuesTable},
+        )
+        .watchSingleOrNull()
+        .map((row) => row?.readNullable<String>('val'));
+  }
+
   Future<void> setValue(String key, String value) {
     return _db
         .into(_db.settingValuesTable)
