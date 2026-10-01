@@ -140,6 +140,10 @@ LazyDatabase _openConnection() {
       setup: (rawDb) {
         rawDb.execute('PRAGMA foreign_keys = ON');
         rawDb.execute('PRAGMA busy_timeout = 3000');
+        // Match the Qt scheduler's journal mode (DELETE) so both apps share
+        // the same locking semantics. Mixing WAL (Flutter default) with DELETE
+        // (Qt) causes SQLITE_BUSY contention on concurrent writes.
+        rawDb.execute('PRAGMA journal_mode = DELETE');
       },
     );
   });

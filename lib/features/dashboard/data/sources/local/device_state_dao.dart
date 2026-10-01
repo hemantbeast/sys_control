@@ -16,6 +16,10 @@ class DeviceStateDao {
     return (_db.select(_db.deviceStateTable)..orderBy([(t) => OrderingTerm.asc(t.unitId)])).watch();
   }
 
+  Future<int> count() {
+    return _db.select(_db.deviceStateTable).get().then((rows) => rows.length);
+  }
+
   Future<void> upsert(DeviceStateTableCompanion entry) {
     return _db.into(_db.deviceStateTable).insertOnConflictUpdate(entry);
   }

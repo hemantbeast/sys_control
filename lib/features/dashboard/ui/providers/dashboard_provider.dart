@@ -1,7 +1,9 @@
 import 'dart:async';
 
+import 'package:flutter/foundation.dart' show debugPrint;
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:sys_control/features/dashboard/data/repositories/dashboard_repository_impl.dart';
+import 'package:sys_control/features/dashboard/data/repositories/device_state_repository_impl.dart';
 import 'package:sys_control/features/dashboard/domain/entities/device_state_entity.dart';
 import 'package:sys_control/features/dashboard/domain/entities/energy_entity.dart';
 import 'package:sys_control/features/dashboard/domain/entities/zone_entity.dart';
@@ -44,6 +46,8 @@ class DashboardNotifier extends Notifier<DashboardState> {
       state = state.copyWith(zones: data);
     });
 
+    _seedInitialDevices();
+
     _deviceSubscription = ref.read(watchDeviceStateUseCaseProvider)().listen((devices) {
       for (final device in devices) {
         if (device.unitId == kIduUnitId) {
@@ -67,6 +71,34 @@ class DashboardNotifier extends Notifier<DashboardState> {
         }
       }
     });
+  }
+
+  /// Mirrors the Qt scheduler's `DashboardBackend::ensureIduRow`: if the shared
+  /// `device_state` table is empty, seed the IDU-1 and ODU-1 rows so the
+  /// thermostat has live data to display on first run.
+  Future<void> _seedInitialDevices() async {
+    final repository = ref.read(deviceStateRepositoryProvider);
+    final count = await repository.countDevices();
+    if (count > 0) {
+      return;
+    }
+
+    final useCase = ref.read(updateDeviceStateUseCaseProvider);
+    await useCase(
+      kIduUnitId,
+      'IDU',
+      targetTemp: 25,
+      mode: 'auto',
+      fanSpeed: 'auto',
+      isOn: true,
+      temperature: 20,
+      humidity: 50,
+    );
+    await useCase(
+      kOduUnitId,
+      'ODU',
+      temperature: 32,
+    );
   }
 
   void setCurrentMode(ModeEnum mode) {
@@ -100,7 +132,19 @@ class DashboardNotifier extends Notifier<DashboardState> {
   }
 
   void _write({double? targetTemp, String? mode, String? fanSpeed, bool? isOn}) {
-    ref.read(updateDeviceStateUseCaseProvider)(kIduUnitId, 'IDU', targetTemp: targetTemp, mode: mode, fanSpeed: fanSpeed, isOn: isOn);
+    ref.read(updateDeviceStateUseCaseProvider)(
+      kIduUnitId,
+      'IDU',
+      targetTemp: targetTemp,
+      mode: mode,
+      fanSpeed: fanSpeed,
+      isOn: isOn,
+    ).then((result) {
+      result.fold(
+        (l) => debugPrint('Failed to update device state: $l'),
+        (r) {},
+      );
+    });
   }
 
   static ModeEnum _modeFromName(String name) {

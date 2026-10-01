@@ -4,6 +4,7 @@ abstract class DeviceStateRepository {
   const DeviceStateRepository();
 
   Stream<List<DeviceStateEntity>> watchDevices();
+  Future<int> countDevices();
   Future<void> upsertDevice(DeviceStateEntity device);
   Future<void> writeFields(
     String unitId,

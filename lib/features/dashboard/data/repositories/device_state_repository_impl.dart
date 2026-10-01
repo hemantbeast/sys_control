@@ -20,6 +20,11 @@ final class DeviceStateRepositoryImpl extends DeviceStateRepository {
   }
 
   @override
+  Future<int> countDevices() {
+    return _dao.count();
+  }
+
+  @override
   Future<void> upsertDevice(DeviceStateEntity device) {
     return _dao.upsert(
       DeviceStateTableCompanion(

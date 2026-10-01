@@ -94,7 +94,7 @@ class ExternalDbChangeDetector {
 
     if (version != _lastDataVersion) {
       _lastDataVersion = version;
-      _mtimeChangedAt = null;
+      // Do NOT clear _mtimeChangedAt here. This poll may have been triggered by our own write (e.g., thermostat drag) whose data_version change we've just consumed, but a directory event for a subsequent external write (Qt) could still be pending. Clearing it here would discard that pending signal and could cause the next Qt write to be missed due to filesystem timestamp granularity on Windows. The timestamp is refreshed on each directory event, so leaving it stale is harmless; it only affects the rare file-replacement detection path below, which additionally requires data_version to be unchanged.
       _invalidateStreams();
       return;
     }

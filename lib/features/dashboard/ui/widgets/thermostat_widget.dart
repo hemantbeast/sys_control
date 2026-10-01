@@ -12,7 +12,7 @@ import 'package:sys_control/features/dashboard/ui/states/dashboard_state.dart';
 import 'package:sys_control/features/settings/ui/providers/app_settings_provider.dart';
 import 'package:sys_control/generated/l10n.dart';
 
-class ThermostatWidget extends ConsumerWidget {
+class ThermostatWidget extends ConsumerStatefulWidget {
   const ThermostatWidget({
     required this.notifier,
     required this.provider,
@@ -27,7 +27,23 @@ class ThermostatWidget extends ConsumerWidget {
   final double avgHumidity;
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<ThermostatWidget> createState() => _ThermostatWidgetState();
+}
+
+class _ThermostatWidgetState extends ConsumerState<ThermostatWidget> {
+  late double _initialProgress;
+
+  @override
+  void initState() {
+    super.initState();
+    _initialProgress = _progressForTemp(widget.provider.targetTemp);
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final provider = widget.provider;
+    final notifier = widget.notifier;
+    final avgHumidity = widget.avgHumidity;
     final unit = ref.watch(appSettingsProvider).temperatureUnit;
 
     return LayoutBuilder(
@@ -75,10 +91,11 @@ class ThermostatWidget extends ConsumerWidget {
                   child: TweenAnimationBuilder<double>(
                     tween: Tween(
                       // Calculate percentage based on a standard temp range (15°C - 35°C)
-                      end: (provider.targetTemp - 15) / (35 - 15),
+                      begin: _initialProgress,
+                      end: _progressForTemp(provider.targetTemp),
                     ),
                     curve: Curves.easeOutCubic,
-                    duration: const Duration(milliseconds: 350),
+                    duration: const Duration(milliseconds: 450),
                     builder: (context, value, child) {
                       return CustomPaint(
                         painter: ThermostatPainter(
@@ -89,37 +106,37 @@ class ThermostatWidget extends ConsumerWidget {
                         child: child,
                       );
                     },
-                      child: Column(
-                        spacing: 4 * scale,
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text(
-                            S.of(context).target,
-                            style: TextStyle(
-                              color: slateGray,
-                              fontSize: 10 * scale,
-                              fontWeight: FontWeight.bold,
-                              letterSpacing: 2,
-                            ),
+                    child: Column(
+                      spacing: 4 * scale,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          S.of(context).target,
+                          style: TextStyle(
+                            color: slateGray,
+                            fontSize: 10 * scale,
+                            fontWeight: FontWeight.bold,
+                            letterSpacing: 2,
                           ),
-                          Text(
-                            unit.format(provider.targetTemp),
-                            style: TextStyle(
-                              color: context.customTheme.blackTextStyle.color,
-                              fontSize: 50 * scale,
-                              fontWeight: FontWeight.w400,
-                            ),
+                        ),
+                        Text(
+                          unit.format(provider.targetTemp),
+                          style: TextStyle(
+                            color: context.customTheme.blackTextStyle.color,
+                            fontSize: 50 * scale,
+                            fontWeight: FontWeight.w400,
                           ),
-                          Text(
-                            '${S.of(context).indoor} ${unit.format(provider.indoorTemp)}',
-                            style: TextStyle(
-                              color: provider.currentMode.color,
-                              fontSize: 12 * scale,
-                              fontWeight: FontWeight.w500,
-                            ),
+                        ),
+                        Text(
+                          '${S.of(context).indoor} ${unit.format(provider.indoorTemp)}',
+                          style: TextStyle(
+                            color: provider.currentMode.color,
+                            fontSize: 12 * scale,
+                            fontWeight: FontWeight.w500,
                           ),
-                        ],
-                      ),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ),
@@ -207,6 +224,10 @@ class ThermostatWidget extends ConsumerWidget {
         onPressed: onPressed,
       ),
     );
+  }
+
+  double _progressForTemp(double temp) {
+    return math.max(0, math.min(1, (temp - 15) / (35 - 15))).toDouble();
   }
 }
 
