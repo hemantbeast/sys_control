@@ -2,21 +2,21 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:fpdart/fpdart.dart';
 import 'package:sys_control/core/failures/failure.dart';
 import 'package:sys_control/features/schedules/data/repositories/schedule_repository_impl.dart';
+import 'package:sys_control/features/schedules/domain/entities/schedule_entity.dart';
 import 'package:sys_control/features/schedules/domain/repositories/schedule_repository.dart';
 
-final deleteScheduleUseCaseProvider = Provider<DeleteScheduleUseCase>((ref) {
-  return DeleteScheduleUseCase(ref.read(scheduleRepositoryProvider));
+final createScheduleUseCaseProvider = Provider<CreateScheduleUseCase>((ref) {
+  return CreateScheduleUseCase(ref.read(scheduleRepositoryProvider));
 });
 
-class DeleteScheduleUseCase {
-  const DeleteScheduleUseCase(this._repository);
+class CreateScheduleUseCase {
+  const CreateScheduleUseCase(this._repository);
 
   final ScheduleRepository _repository;
 
-  Future<Either<Failure, Unit>> call(int id) async {
+  Future<Either<Failure, int>> call(ScheduleEntity schedule) async {
     try {
-      await _repository.delete(id);
-      return right(unit);
+      return right(await _repository.create(schedule));
     } on Object catch (e) {
       return left(UnexpectedFailure(e.toString()));
     }

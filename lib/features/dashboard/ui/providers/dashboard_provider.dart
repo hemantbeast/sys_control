@@ -2,15 +2,18 @@ import 'dart:async';
 
 import 'package:flutter/foundation.dart' show debugPrint;
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:sys_control/features/dashboard/data/repositories/dashboard_repository_impl.dart';
-import 'package:sys_control/features/dashboard/data/repositories/device_state_repository_impl.dart';
+import 'package:fpdart/fpdart.dart';
+import 'package:sys_control/core/failures/failure.dart';
 import 'package:sys_control/features/dashboard/domain/entities/device_state_entity.dart';
 import 'package:sys_control/features/dashboard/domain/entities/energy_entity.dart';
 import 'package:sys_control/features/dashboard/domain/entities/zone_entity.dart';
 import 'package:sys_control/features/dashboard/domain/enums/fan_speed_enum.dart';
 import 'package:sys_control/features/dashboard/domain/enums/mode_enum.dart';
+import 'package:sys_control/features/dashboard/domain/usecases/count_devices_usecase.dart';
 import 'package:sys_control/features/dashboard/domain/usecases/update_device_state_usecase.dart';
 import 'package:sys_control/features/dashboard/domain/usecases/watch_device_state_usecase.dart';
+import 'package:sys_control/features/dashboard/domain/usecases/watch_energy_usecase.dart';
+import 'package:sys_control/features/dashboard/domain/usecases/watch_zones_usecase.dart';
 import 'package:sys_control/features/dashboard/ui/states/dashboard_state.dart';
 
 const String kIduUnitId = 'IDU-1';
@@ -19,9 +22,9 @@ const String kOduUnitId = 'ODU-1';
 final dashboardProvider = NotifierProvider.autoDispose<DashboardNotifier, DashboardState>(DashboardNotifier.new);
 
 class DashboardNotifier extends Notifier<DashboardState> {
-  StreamSubscription<EnergyEntity>? _energySubscription;
-  StreamSubscription<List<ZoneEntity>>? _zonesSubscription;
-  StreamSubscription<List<DeviceStateEntity>>? _deviceSubscription;
+  StreamSubscription<Either<Failure, EnergyEntity>>? _energySubscription;
+  StreamSubscription<Either<Failure, List<ZoneEntity>>>? _zonesSubscription;
+  StreamSubscription<Either<Failure, List<DeviceStateEntity>>>? _deviceSubscription;
 
   @override
   DashboardState build() {
@@ -43,40 +46,49 @@ class DashboardNotifier extends Notifier<DashboardState> {
     _zonesSubscription?.cancel();
     _deviceSubscription?.cancel();
 
-    final repository = ref.read(dashboardRepositoryProvider);
-
-    _energySubscription = repository.watchEnergy().listen((entity) {
-      state = state.copyWith(energy: entity);
+    _energySubscription = ref.read(watchEnergyUseCaseProvider)().listen((result) {
+      result.fold(
+        (failure) => debugPrint('Failed to watch energy: $failure'),
+        (entity) => state = state.copyWith(energy: entity),
+      );
     });
 
-    _zonesSubscription = repository.watchZones().listen((data) {
-      state = state.copyWith(zones: data);
+    _zonesSubscription = ref.read(watchZonesUseCaseProvider)().listen((result) {
+      result.fold(
+        (failure) => debugPrint('Failed to watch zones: $failure'),
+        (data) => state = state.copyWith(zones: data),
+      );
     });
 
     _seedInitialDevices();
 
-    _deviceSubscription = ref.read(watchDeviceStateUseCaseProvider)().listen((devices) {
-      for (final device in devices) {
-        if (device.unitId == kIduUnitId) {
-          state = state.copyWith(
-            indoorTemp: device.temperature,
-            targetTemp: device.targetTemp,
-            currentMode: _modeFromName(device.mode),
-            fanSpeed: _fanFromName(device.fanSpeed),
-            isOn: device.isOn,
-          );
-        } else if (device.unitId == kOduUnitId) {
-          final energy = state.energy;
-          state = state.copyWith(
-            energy: EnergyEntity(
-              cost: energy.cost,
-              efficiency: energy.efficiency,
-              usage: energy.usage,
-              outdoorTemp: device.temperature,
-            ),
-          );
-        }
-      }
+    _deviceSubscription = ref.read(watchDeviceStateUseCaseProvider)().listen((result) {
+      result.fold(
+        (failure) => debugPrint('Failed to watch device state: $failure'),
+        (devices) {
+          for (final device in devices) {
+            if (device.unitId == kIduUnitId) {
+              state = state.copyWith(
+                indoorTemp: device.temperature,
+                targetTemp: device.targetTemp,
+                currentMode: _modeFromName(device.mode),
+                fanSpeed: _fanFromName(device.fanSpeed),
+                isOn: device.isOn,
+              );
+            } else if (device.unitId == kOduUnitId) {
+              final energy = state.energy;
+              state = state.copyWith(
+                energy: EnergyEntity(
+                  cost: energy.cost,
+                  efficiency: energy.efficiency,
+                  usage: energy.usage,
+                  outdoorTemp: device.temperature,
+                ),
+              );
+            }
+          }
+        },
+      );
     });
   }
 
@@ -84,9 +96,12 @@ class DashboardNotifier extends Notifier<DashboardState> {
   /// `device_state` table is empty, seed the IDU-1 and ODU-1 rows so the
   /// thermostat has live data to display on first run.
   Future<void> _seedInitialDevices() async {
-    final repository = ref.read(deviceStateRepositoryProvider);
-    final count = await repository.countDevices();
-    if (count > 0) {
+    final count = await ref.read(countDevicesUseCaseProvider)();
+    final isEmpty = count.fold((failure) {
+      debugPrint('Failed to count devices: $failure');
+      return false;
+    }, (value) => value == 0);
+    if (!isEmpty) {
       return;
     }
 

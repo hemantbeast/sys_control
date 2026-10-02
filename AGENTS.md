@@ -72,6 +72,10 @@ data →  domain (entities, enums, repositories abstract)
 - Entities never import models. Models import entities (for `toEntity`).
 - UI never imports `data` — not models, not `sources`, not `*RepositoryImpl`.
 - Any arrow the other way is a bug. Fix it, don't paper over it.
+- Binding exceptions (wiring, not feature deps): `domain/usecases/*` may import
+  `data/repositories/*_repository_impl.dart` solely to read the repository
+  `Provider`; `core/database/app_database.dart` may import
+  `features/*/databases/*_table.dart` as the drift schema registry.
 
 ### The usecase layer (mandated)
 
@@ -97,8 +101,14 @@ class WatchEnergyUseCase {
 
   final {Name}Repository _repository;
 
-  Stream<Either<Failure, EnergyEntity>> call() {
-    return _repository.watchEnergy().map(Either.right).onError((e, _) => Stream.value(Either.left(UnexpectedFailure(e.toString()))));
+  Stream<Either<Failure, EnergyEntity>> call() async* {
+    try {
+      await for (final entity in _repository.watchEnergy()) {
+        yield right(entity);
+      }
+    } on Object catch (e) {
+      yield left(UnexpectedFailure(e.toString()));
+    }
   }
 }
 ```
@@ -106,6 +116,7 @@ class WatchEnergyUseCase {
 Rules:
 
 - Concrete class with a `call` method — **no base `UseCase` interface**. One class per file. `ponytail:` add `abstract interface class UseCase<In,Out>` only if ≥3 usecases share param/result shaping.
+- Exception: a pure domain calculator with no I/O (e.g. `ProcessSchedulesUseCase`) keeps named sync methods and raw return types — there is no `Failure` path to wrap.
 - Synchronous reads / commands return `Future<Either<Failure, T>>`. Streaming watch-* ops return `Stream<Either<Failure, T>>`.
 - The usecase's `Provider` reads the repository provider; the notifier reads the usecase provider. Keep this one hop.
 - One usecase per user action / domain operation. Don't bundle unrelated calls into a single "facade" usecase.

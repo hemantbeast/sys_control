@@ -1,5 +1,12 @@
+import 'package:flutter/foundation.dart' show debugPrint;
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:sys_control/features/history/domain/usecases/watch_history_usecase.dart';
+import 'package:sys_control/features/history/domain/usecases/watch_energy_cost_usecase.dart';
+import 'package:sys_control/features/history/domain/usecases/watch_energy_usage_usecase.dart';
+import 'package:sys_control/features/history/domain/usecases/watch_humidity_history_usecase.dart';
+import 'package:sys_control/features/history/domain/usecases/watch_mode_distribution_usecase.dart';
+import 'package:sys_control/features/history/domain/usecases/watch_schedule_activity_usecase.dart';
+import 'package:sys_control/features/history/domain/usecases/watch_temperature_history_usecase.dart';
+import 'package:sys_control/features/history/domain/usecases/watch_zone_comparison_usecase.dart';
 import 'package:sys_control/features/history/ui/enums/energy_time_range.dart';
 import 'package:sys_control/features/history/ui/enums/history_time_range.dart';
 import 'package:sys_control/features/history/ui/states/history_state.dart';
@@ -16,34 +23,53 @@ class HistoryNotifier extends Notifier<HistoryState> {
   }
 
   void _loadAll() {
-    final useCase = ref.read(watchHistoryUseCaseProvider);
-
-    final tempSub = useCase.watchTemperatureHistory().listen((data) {
-      state = state.copyWith(temperatureHistory: data, isLoading: false);
+    final tempSub = ref.read(watchTemperatureHistoryUseCaseProvider)().listen((result) {
+      result.fold(
+        (failure) => debugPrint('Failed to watch temperature history: $failure'),
+        (data) => state = state.copyWith(temperatureHistory: data, isLoading: false),
+      );
     });
 
-    final energySub = useCase.watchEnergyUsage(monthly: true).listen((data) {
-      state = state.copyWith(energyUsage: data);
+    final energySub = ref.read(watchEnergyUsageUseCaseProvider)(monthly: true).listen((result) {
+      result.fold(
+        (failure) => debugPrint('Failed to watch energy usage: $failure'),
+        (data) => state = state.copyWith(energyUsage: data),
+      );
     });
 
-    final costSub = useCase.watchEnergyCost().listen((data) {
-      state = state.copyWith(energyCost: data);
+    final costSub = ref.read(watchEnergyCostUseCaseProvider)().listen((result) {
+      result.fold(
+        (failure) => debugPrint('Failed to watch energy cost: $failure'),
+        (data) => state = state.copyWith(energyCost: data),
+      );
     });
 
-    final humiditySub = useCase.watchHumidityHistory().listen((data) {
-      state = state.copyWith(humidityHistory: data);
+    final humiditySub = ref.read(watchHumidityHistoryUseCaseProvider)().listen((result) {
+      result.fold(
+        (failure) => debugPrint('Failed to watch humidity history: $failure'),
+        (data) => state = state.copyWith(humidityHistory: data),
+      );
     });
 
-    final modeSub = useCase.watchModeDistribution().listen((data) {
-      state = state.copyWith(modeDistribution: data);
+    final modeSub = ref.read(watchModeDistributionUseCaseProvider)().listen((result) {
+      result.fold(
+        (failure) => debugPrint('Failed to watch mode distribution: $failure'),
+        (data) => state = state.copyWith(modeDistribution: data),
+      );
     });
 
-    final zoneSub = useCase.watchZoneComparison().listen((data) {
-      state = state.copyWith(zoneComparison: data);
+    final zoneSub = ref.read(watchZoneComparisonUseCaseProvider)().listen((result) {
+      result.fold(
+        (failure) => debugPrint('Failed to watch zone comparison: $failure'),
+        (data) => state = state.copyWith(zoneComparison: data),
+      );
     });
 
-    final scheduleSub = useCase.watchScheduleActivity().listen((data) {
-      state = state.copyWith(scheduleActivity: data);
+    final scheduleSub = ref.read(watchScheduleActivityUseCaseProvider)().listen((result) {
+      result.fold(
+        (failure) => debugPrint('Failed to watch schedule activity: $failure'),
+        (data) => state = state.copyWith(scheduleActivity: data),
+      );
     });
 
     ref.onDispose(() {
@@ -63,9 +89,11 @@ class HistoryNotifier extends Notifier<HistoryState> {
 
   void setEnergyRange(EnergyTimeRange range) {
     state = state.copyWith(selectedEnergyRange: range);
-    final useCase = ref.read(watchHistoryUseCaseProvider);
-    final sub = useCase.watchEnergyUsage(monthly: range == EnergyTimeRange.monthly).listen((data) {
-      state = state.copyWith(energyUsage: data);
+    final sub = ref.read(watchEnergyUsageUseCaseProvider)(monthly: range == EnergyTimeRange.monthly).listen((result) {
+      result.fold(
+        (failure) => debugPrint('Failed to watch energy usage: $failure'),
+        (data) => state = state.copyWith(energyUsage: data),
+      );
     });
     ref.onDispose(sub.cancel);
   }

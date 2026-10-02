@@ -1,5 +1,7 @@
+import 'package:flutter/foundation.dart' show debugPrint;
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:sys_control/features/schedules/domain/usecases/delete_schedule_usecase.dart';
+import 'package:sys_control/features/schedules/domain/usecases/toggle_schedule_enabled_usecase.dart';
 import 'package:sys_control/features/schedules/domain/usecases/watch_schedules_usecase.dart';
 import 'package:sys_control/features/schedules/ui/states/schedule_list_state.dart';
 
@@ -12,11 +14,15 @@ class ScheduleListNotifier extends Notifier<ScheduleListState> {
   ScheduleListState build() {
     final watchUseCase = ref.read(watchSchedulesUseCaseProvider);
     final sub = watchUseCase().listen(
-      (schedules) {
-        state = state.copyWith(schedules: schedules, isLoading: false);
-      },
-      onError: (Object error) {
-        state = state.copyWith(error: error.toString(), isLoading: false);
+      (result) {
+        result.fold(
+          (failure) {
+            state = state.copyWith(error: failure.message, isLoading: false);
+          },
+          (schedules) {
+            state = state.copyWith(schedules: schedules, isLoading: false);
+          },
+        );
       },
     );
     ref.onDispose(sub.cancel);
@@ -24,12 +30,18 @@ class ScheduleListNotifier extends Notifier<ScheduleListState> {
   }
 
   Future<void> deleteSchedule(int id) async {
-    final deleteUseCase = ref.read(deleteScheduleUseCaseProvider);
-    await deleteUseCase.delete(id);
+    final result = await ref.read(deleteScheduleUseCaseProvider)(id);
+    result.fold(
+      (failure) => debugPrint('Failed to delete schedule: $failure'),
+      (_) {},
+    );
   }
 
   Future<void> toggleEnabled(int id, {required bool isEnabled}) async {
-    final deleteUseCase = ref.read(deleteScheduleUseCaseProvider);
-    await deleteUseCase.toggleEnabled(id, isEnabled: isEnabled);
+    final result = await ref.read(toggleScheduleEnabledUseCaseProvider)(id, isEnabled: isEnabled);
+    result.fold(
+      (failure) => debugPrint('Failed to toggle schedule: $failure'),
+      (_) {},
+    );
   }
 }

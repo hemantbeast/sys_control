@@ -1,4 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:fpdart/fpdart.dart';
+import 'package:sys_control/core/failures/failure.dart';
 import 'package:sys_control/features/dashboard/data/repositories/device_state_repository_impl.dart';
 import 'package:sys_control/features/dashboard/domain/entities/device_state_entity.dart';
 import 'package:sys_control/features/dashboard/domain/repositories/device_state_repository.dart';
@@ -12,7 +14,13 @@ class WatchDeviceStateUseCase {
 
   final DeviceStateRepository _repository;
 
-  Stream<List<DeviceStateEntity>> call() {
-    return _repository.watchDevices();
+  Stream<Either<Failure, List<DeviceStateEntity>>> call() async* {
+    try {
+      await for (final devices in _repository.watchDevices()) {
+        yield right(devices);
+      }
+    } on Object catch (e) {
+      yield left(UnexpectedFailure(e.toString()));
+    }
   }
 }

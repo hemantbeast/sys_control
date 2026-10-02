@@ -10,4 +10,6 @@ abstract class MainState with _$MainState {
     @Default(0) int selectedMenuIndex,
     @Default(0) int previousMenuIndex,
   }) = _MainState;
+
+  factory MainState.initial() => const MainState();
 }

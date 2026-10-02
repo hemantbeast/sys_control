@@ -2,7 +2,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:sys_control/features/dashboard/domain/enums/mode_enum.dart';
 import 'package:sys_control/features/schedules/domain/entities/schedule_entity.dart';
 import 'package:sys_control/features/schedules/domain/enums/repeat_type_enum.dart';
-import 'package:sys_control/features/schedules/domain/usecases/save_schedule_usecase.dart';
+import 'package:sys_control/features/schedules/domain/usecases/create_schedule_usecase.dart';
+import 'package:sys_control/features/schedules/domain/usecases/update_schedule_usecase.dart';
 import 'package:sys_control/features/schedules/ui/states/add_schedule_state.dart';
 
 final addScheduleProvider = NotifierProvider.autoDispose<AddScheduleNotifier, AddScheduleState>(
@@ -74,7 +75,6 @@ class AddScheduleNotifier extends Notifier<AddScheduleState> {
       return null;
     }
 
-    final saveUseCase = ref.read(saveScheduleUseCaseProvider);
     final entity = ScheduleEntity(
       id: state.editingId ?? 0,
       name: state.name.trim(),
@@ -87,10 +87,23 @@ class AddScheduleNotifier extends Notifier<AddScheduleState> {
     );
 
     if (state.isEditing) {
-      await saveUseCase.update(entity);
-      return state.editingId;
-    } else {
-      return saveUseCase.create(entity);
+      final result = await ref.read(updateScheduleUseCaseProvider)(entity);
+      return result.fold(
+        (failure) {
+          state = state.copyWith(error: failure.message);
+          return null;
+        },
+        (_) => state.editingId,
+      );
     }
+
+    final result = await ref.read(createScheduleUseCaseProvider)(entity);
+    return result.fold(
+      (failure) {
+        state = state.copyWith(error: failure.message);
+        return null;
+      },
+      (id) => id,
+    );
   }
 }

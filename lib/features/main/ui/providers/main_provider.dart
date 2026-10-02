@@ -11,7 +11,7 @@ class MainNotifier extends Notifier<MainState> {
   @override
   MainState build() {
     Future.delayed(Duration.zero, _setMenuList);
-    return const MainState();
+    return MainState.initial();
   }
 
   void _setMenuList() {

@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:flutter/foundation.dart' show debugPrint;
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:sys_control/features/dashboard/domain/enums/mode_enum.dart';
 import 'package:sys_control/features/schedules/domain/entities/schedule_entity.dart';
@@ -19,8 +20,11 @@ class TimerNotifier extends Notifier<TimerState> {
   @override
   TimerState build() {
     final watchUseCase = ref.read(watchSchedulesUseCaseProvider);
-    final sub = watchUseCase().listen((schedules) {
-      _schedules = schedules;
+    final sub = watchUseCase().listen((result) {
+      result.fold(
+        (failure) => debugPrint('Failed to watch schedules: $failure'),
+        (schedules) => _schedules = schedules,
+      );
     });
     ref.onDispose(() {
       sub.cancel();
