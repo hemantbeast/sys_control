@@ -11,28 +11,33 @@ class ExternalDbChangeDetector {
   ExternalDbChangeDetector(
     this._db, {
     required void Function() onFileReplaced,
+    this.dbPathOverride,
     this.pollInterval = const Duration(seconds: 2),
     this.debounceDelay = const Duration(milliseconds: 300),
   }) : _onFileReplaced = onFileReplaced;
 
   final AppDatabase _db;
   final void Function() _onFileReplaced;
+  final String? dbPathOverride;
   final Duration pollInterval;
   final Duration debounceDelay;
+
+  static const int _maxFailedPolls = 3;
 
   Timer? _pollTimer;
   Timer? _debounceTimer;
   StreamSubscription<FileSystemEvent>? _dirSubscription;
   String? _dbPath;
   int? _lastDataVersion;
+  int _failedPolls = 0;
   DateTime _lastMtime = DateTime.fromMillisecondsSinceEpoch(0);
-  DateTime? _mtimeChangedAt;
+  DateTime _birthTime = DateTime.fromMillisecondsSinceEpoch(0);
   bool _directoryWatching = false;
   bool _disposed = false;
 
   Future<void> start() async {
     try {
-      _dbPath = await databaseFilePath();
+      _dbPath = dbPathOverride ?? await databaseFilePath();
     } on Object {
       return;
     }
@@ -51,6 +56,7 @@ class ExternalDbChangeDetector {
     final stat = file.statSync();
     if (stat.type != FileSystemEntityType.notFound) {
       _lastMtime = stat.modified;
+      _birthTime = stat.changed;
     }
 
     _pollTimer = Timer.periodic(pollInterval, (_) => _poll());
@@ -84,8 +90,14 @@ class ExternalDbChangeDetector {
 
     final version = await _readDataVersion();
     if (version == null) {
+      _failedPolls++;
+      if (_failedPolls >= _maxFailedPolls) {
+        _failedPolls = 0;
+        _onFileReplaced();
+      }
       return;
     }
+    _failedPolls = 0;
 
     if (_lastDataVersion == null) {
       _lastDataVersion = version;
@@ -94,17 +106,7 @@ class ExternalDbChangeDetector {
 
     if (version != _lastDataVersion) {
       _lastDataVersion = version;
-      // Do NOT clear _mtimeChangedAt here. This poll may have been triggered by our own write (e.g., thermostat drag) whose data_version change we've just consumed, but a directory event for a subsequent external write (Qt) could still be pending. Clearing it here would discard that pending signal and could cause the next Qt write to be missed due to filesystem timestamp granularity on Windows. The timestamp is refreshed on each directory event, so leaving it stale is harmless; it only affects the rare file-replacement detection path below, which additionally requires data_version to be unchanged.
       _invalidateStreams();
-      return;
-    }
-
-    // Mtime moved but data_version never followed: the file was replaced by an
-    // editor that did not commit through sqlite against our open handle.
-    final changedAt = _mtimeChangedAt;
-    if (changedAt != null && DateTime.now().difference(changedAt) >= pollInterval) {
-      _mtimeChangedAt = null;
-      _onFileReplaced();
     }
   }
 
@@ -124,13 +126,25 @@ class ExternalDbChangeDetector {
     if (stat.type == FileSystemEntityType.notFound) {
       return;
     }
+
+    // ponytail: FileStat.changed is the file creation time on Windows, and an
+    // in-place commit can never move it, so this is the whole-file-replacement
+    // signal here. On other platforms changed() moves on writes too, so
+    // replacement falls through to the failed-poll escalation in _poll().
+    // Upgrade path: compare file ids (GetFileInformationByHandle/statx).
+    if (Platform.isWindows && stat.changed != _birthTime) {
+      _birthTime = stat.changed;
+      _lastMtime = stat.modified;
+      _debounceTimer?.cancel();
+      _debounceTimer = Timer(debounceDelay, _onFileReplaced);
+      return;
+    }
+
     if (!stat.modified.isAfter(_lastMtime)) {
       return;
     }
 
     _lastMtime = stat.modified;
-    _mtimeChangedAt = DateTime.now();
-
     _debounceTimer?.cancel();
     _debounceTimer = Timer(debounceDelay, _invalidateStreams);
   }

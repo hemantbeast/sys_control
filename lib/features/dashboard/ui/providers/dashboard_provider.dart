@@ -25,6 +25,9 @@ class DashboardNotifier extends Notifier<DashboardState> {
 
   @override
   DashboardState build() {
+    // Rebuild (and re-subscribe) when the database is recreated after a file
+    // replacement; _setupStreams then swaps onto the live AppDatabase.
+    ref.watch(watchDeviceStateUseCaseProvider);
     ref.onDispose(() {
       _energySubscription?.cancel();
       _zonesSubscription?.cancel();
@@ -36,6 +39,10 @@ class DashboardNotifier extends Notifier<DashboardState> {
   }
 
   void _setupStreams() {
+    _energySubscription?.cancel();
+    _zonesSubscription?.cancel();
+    _deviceSubscription?.cancel();
+
     final repository = ref.read(dashboardRepositoryProvider);
 
     _energySubscription = repository.watchEnergy().listen((entity) {

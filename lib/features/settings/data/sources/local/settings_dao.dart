@@ -3,7 +3,7 @@ import 'package:sys_control/core/database/app_database.dart';
 import 'package:sys_control/core/database/database_providers.dart';
 
 final settingsDaoProvider = Provider<SettingsDao>((ref) {
-  return SettingsDao(ref.read(appDatabaseProvider));
+  return SettingsDao(ref.watch(appDatabaseProvider));
 });
 
 class SettingsDao {

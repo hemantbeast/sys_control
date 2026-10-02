@@ -4,7 +4,7 @@ import 'package:sys_control/core/database/app_database.dart';
 import 'package:sys_control/core/database/database_providers.dart';
 
 final scheduleDaoProvider = Provider<ScheduleDao>((ref) {
-  return ScheduleDao(ref.read(appDatabaseProvider));
+  return ScheduleDao(ref.watch(appDatabaseProvider));
 });
 
 class ScheduleDao {

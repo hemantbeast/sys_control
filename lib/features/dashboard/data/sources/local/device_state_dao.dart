@@ -4,7 +4,7 @@ import 'package:sys_control/core/database/app_database.dart';
 import 'package:sys_control/core/database/database_providers.dart';
 
 final deviceStateDaoProvider = Provider<DeviceStateDao>((ref) {
-  return DeviceStateDao(ref.read(appDatabaseProvider));
+  return DeviceStateDao(ref.watch(appDatabaseProvider));
 });
 
 class DeviceStateDao {

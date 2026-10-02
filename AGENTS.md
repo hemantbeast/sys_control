@@ -162,6 +162,38 @@ Already available — prefer these over adding new ones: `fpdart` (Either/TaskEi
 - **Dialogs**: `AlertDialog` with `context.theme.cardColor` bg, `BorderRadius.circular(14)`.
 - **Widget helpers**: `widget.onTap(context: context, onTap: ...)`, `widget.applySafeArea()`, `widget.toCenter()`, `widget.withTooltip(...)` from `widget_extension.dart`.
 
+## Inter-project contract with scheduler (Qt)
+
+`engine/` holds vendored Flutter embedder archives (`flutter_engine.dll` /
+`libflutter_engine.so` + `flutter_embedder.h`) for embedding into a native
+host — committed to git, not used by the standard `flutter run`.
+
+This app and the Qt app at `D:\TechNova\scheduler` are separate processes
+coupled **only** through one shared SQLite DB. Changing any of the following
+unilaterally breaks the sibling app — coordinate schema/behavior changes in
+both repos in the same change set. Mirrored rules live in `scheduler/AGENTS.md`.
+
+1. **DB path resolution** (`core/database/db_path_resolver.dart` mirrors Qt's
+   `DbPathResolver`): `<config>/LG/deluxe.json` key `db_path` (Windows:
+   `%LOCALAPPDATA%\LG\`) → else `LG/deluxe.db`; legacy `sys_control.sqlite` is
+   migrated. Both apps must resolve identically.
+2. **journal_mode = DELETE, busy_timeout = 3000** (`app_database.dart`). Never
+   switch to WAL — it causes SQLITE_BUSY contention between the two processes.
+3. **Adoption-safe migrations**: drift migrations create only *missing* tables
+   so Qt-created schemas are adopted, never recreated. The `schedules` table
+   uses Qt's camelCase schema — Qt is the source of truth; column changes must
+   land in both `app_database.dart` and the Qt side.
+4. **`device_state` table** (unitId PK: `IDU-1`/`ODU-1`; unitType, temperature,
+   humidity, targetTemp, mode, fanSpeed, isOn, updatedAt): shared middleware —
+   this app's sensor sim writes it, Qt's DashboardBackend reads/writes back.
+   Keep the camelCase column names.
+5. **External-change detection** (`external_db_change_detector.dart` mirrors
+   Qt's `DatabaseManager::enableExternalChangeDetection`): poll
+   `PRAGMA data_version` every 2s + watch db dir mtime (300ms debounce),
+   invalidate drift streams on external commits. Qt expects ~2s propagation —
+   don't lengthen the interval. Whole-file DB replacement re-creates the DB
+   provider; that's the fallback path, not the normal one.
+
 ## Working rules
 
 - **Read before write.** Trace the full flow a change touches (every file, every caller) before editing. The shortest diff in the wrong place is a second bug.
