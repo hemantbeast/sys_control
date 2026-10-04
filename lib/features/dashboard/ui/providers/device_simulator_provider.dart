@@ -19,7 +19,7 @@ class DeviceSimulatorNotifier extends Notifier<bool> {
   @override
   bool build() {
     ref.onDispose(() => _timer?.cancel());
-    return false;
+    return true;
   }
 
   void toggle() {

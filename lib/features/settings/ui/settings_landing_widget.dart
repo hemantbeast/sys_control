@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:sys_control/app/routes/app_router.dart';
 import 'package:sys_control/app/routes/route_enum.dart';
 import 'package:sys_control/core/extensions/context_extension.dart';
+import 'package:sys_control/core/extensions/widget_extension.dart';
 import 'package:sys_control/features/dashboard/ui/providers/device_simulator_provider.dart';
 import 'package:sys_control/features/settings/ui/providers/settings_categories_provider.dart';
 import 'package:sys_control/features/settings/ui/widgets/setting_icons.dart';
@@ -63,7 +64,7 @@ class SettingsLandingWidget extends ConsumerWidget {
               ),
               value: ref.watch(deviceSimulatorProvider),
               onChanged: (_) => ref.read(deviceSimulatorProvider.notifier).toggle(),
-            ),
+            ).visibility(visible: false),
           ],
         ),
       ),
