@@ -4,6 +4,8 @@ import 'package:sys_control/app/routes/app_router.dart';
 import 'package:sys_control/features/settings/domain/entities/setting_category_entity.dart';
 import 'package:sys_control/features/settings/ui/providers/settings_items_provider.dart';
 import 'package:sys_control/features/settings/ui/widgets/setting_item_tile.dart';
+import 'package:sys_control/features/settings/ui/widgets/setting_translation.dart';
+import 'package:sys_control/generated/l10n.dart';
 
 class SettingsCategoryPage extends ConsumerWidget {
   const SettingsCategoryPage({required this.category, super.key});
@@ -23,7 +25,7 @@ class SettingsCategoryPage extends ConsumerWidget {
           icon: Icon(Icons.arrow_back_ios_rounded),
           onPressed: AppRouter.pop,
         ),
-        title: Text(category.label),
+        title: Text(settingLabel(S.of(context), category.label)),
       ),
       body: state.isLoading && items.isEmpty
           ? const Center(child: CircularProgressIndicator())

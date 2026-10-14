@@ -2,6 +2,7 @@ import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:sys_control/core/extensions/context_extension.dart';
+import 'package:sys_control/core/extensions/enum_l10n_extension.dart';
 import 'package:sys_control/features/history/domain/entities/mode_usage_entity.dart';
 import 'package:sys_control/features/history/ui/widgets/chart_card_wrapper.dart';
 import 'package:sys_control/generated/l10n.dart';
@@ -59,7 +60,7 @@ class ModeDistributionChartCard extends ConsumerWidget {
                   Container(width: 10, height: 10, decoration: BoxDecoration(color: item.mode.color, shape: BoxShape.circle)),
                   const SizedBox(width: 6),
                   Text(
-                    '${item.mode.longName} (${item.hours.toStringAsFixed(0)}h)',
+                    '${item.mode.label(l10n)} (${item.hours.toStringAsFixed(0)}h)',
                     style: TextStyle(color: grayColor, fontSize: 12),
                   ),
                 ],

@@ -155,7 +155,7 @@ class EnergyUsageChartCard extends ConsumerWidget {
                 ),
               ),
               child: Text(
-                range.longName,
+                range.label(S.current),
                 style: TextStyle(
                   color: isSelected ? const Color(0xFF00B4FF) : grayColor,
                   fontSize: 11,

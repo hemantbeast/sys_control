@@ -8,6 +8,7 @@ import 'package:sys_control/features/settings/ui/widgets/setting_enum_picker.dar
 import 'package:sys_control/features/settings/ui/widgets/setting_icons.dart';
 import 'package:sys_control/features/settings/ui/widgets/setting_slider_dialog.dart';
 import 'package:sys_control/features/settings/ui/widgets/setting_text_dialog.dart';
+import 'package:sys_control/features/settings/ui/widgets/setting_translation.dart';
 import 'package:sys_control/features/settings/ui/widgets/settings_list_tile.dart';
 import 'package:sys_control/generated/l10n.dart';
 
@@ -18,10 +19,12 @@ class SettingItemTile extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final label = settingLabel(S.of(context), item.label);
+
     return SettingsListTile(
       icon: settingItemIcon(item.type),
-      title: item.label,
-      subtitle: item.description.isEmpty ? null : item.description,
+      title: label,
+      subtitle: item.description.isEmpty ? null : settingDescription(S.of(context), item.description),
       trailing: _buildTrailing(context, ref),
       onTap: item.isReadOnly ? null : () => _openEditor(context, ref),
     );
@@ -45,12 +48,14 @@ class SettingItemTile extends ConsumerWidget {
   }
 
   void _openEditor(BuildContext context, WidgetRef ref) {
+    final label = settingLabel(S.of(context), item.label);
+
     switch (item.type) {
       case 'range':
         showSliderDialog(
           context: context,
           ref: ref,
-          title: item.label,
+          title: label,
           current: item.numericValue,
           min: item.minValue ?? 0,
           max: item.maxValue ?? 100,
@@ -61,7 +66,7 @@ class SettingItemTile extends ConsumerWidget {
       case 'dropdown':
         showEnumPicker<String>(
           context: context,
-          title: item.label,
+          title: label,
           options: item.options,
           current: item.value ?? '',
           labelBuilder: (option) => option,
@@ -70,7 +75,7 @@ class SettingItemTile extends ConsumerWidget {
       case 'input':
         showSettingTextDialog(
           context: context,
-          title: item.label,
+          title: label,
           initial: item.value ?? '',
           maxLength: item.maxLength,
           onSaved: (value) => _save(ref, value),
@@ -87,7 +92,7 @@ class SettingItemTile extends ConsumerWidget {
     final saved = await notifier.saveValue(item.key, value);
 
     if (!saved) {
-      ToastUtils.showToast(S.current.invalidValue(item.label));
+      ToastUtils.showToast(S.current.invalidValue(settingLabel(S.current, item.label)));
     }
   }
 }

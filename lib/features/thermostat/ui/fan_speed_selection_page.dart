@@ -4,9 +4,11 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:sys_control/app/routes/app_router.dart';
 import 'package:sys_control/app/themes/colors.dart';
 import 'package:sys_control/core/extensions/context_extension.dart';
+import 'package:sys_control/core/extensions/enum_l10n_extension.dart';
 import 'package:sys_control/core/extensions/widget_extension.dart';
 import 'package:sys_control/features/dashboard/domain/enums/fan_speed_enum.dart';
 import 'package:sys_control/features/thermostat/ui/providers/thermostat_provider.dart';
+import 'package:sys_control/generated/l10n.dart';
 
 class FanSpeedSelectionPage extends ConsumerWidget {
   const FanSpeedSelectionPage({super.key});
@@ -26,7 +28,7 @@ class FanSpeedSelectionPage extends ConsumerWidget {
           icon: Icon(Icons.arrow_back_ios_rounded),
           onPressed: AppRouter.pop,
         ),
-        title: const Text('Fan Speed'),
+        title: Text(S.of(context).fanSpeedTitle),
         centerTitle: true,
       ),
       body: Center(
@@ -114,7 +116,7 @@ class _FanSpeedCard extends StatelessWidget {
           ),
           const SizedBox(height: 12),
           Text(
-            fanSpeed.name[0].toUpperCase() + fanSpeed.name.substring(1),
+            fanSpeed.label(S.of(context)),
             style: TextStyle(
               color: isActive ? modeColor : context.customTheme.blackTextStyle.color,
               fontSize: 15,

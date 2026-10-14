@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:sys_control/core/extensions/context_extension.dart';
 import 'package:sys_control/features/dashboard/domain/enums/mode_enum.dart';
 import 'package:sys_control/features/schedules/domain/enums/repeat_type_enum.dart';
+import 'package:sys_control/generated/l10n.dart';
 
 class ScheduleListItem extends StatelessWidget {
   const ScheduleListItem({
@@ -97,7 +99,7 @@ class ScheduleListItem extends StatelessWidget {
                           borderRadius: BorderRadius.circular(10),
                         ),
                         child: Text(
-                          'RUNNING',
+                          S.of(context).running,
                           style: TextStyle(
                             color: mode.color,
                             fontSize: 9,
@@ -114,7 +116,7 @@ class ScheduleListItem extends StatelessWidget {
                     Icon(Icons.play_arrow, size: 13, color: context.customTheme.grayTextStyle.color),
                     const SizedBox(width: 4),
                     Text(
-                      _formatTimeInfo(startTime, repeatType),
+                      _formatTimeInfo(S.of(context), startTime, repeatType),
                       style: context.customTheme.grayTextStyle.copyWith(fontSize: 13),
                     ),
                     const SizedBox(width: 8),
@@ -161,15 +163,14 @@ class ScheduleListItem extends StatelessWidget {
     };
   }
 
-  static String _formatTimeInfo(DateTime startTime, RepeatTypeEnum repeatType) {
-    const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+  static String _formatTimeInfo(S l10n, DateTime startTime, RepeatTypeEnum repeatType) {
     final timeStr = '${startTime.hour.toString().padLeft(2, '0')}:${startTime.minute.toString().padLeft(2, '0')}';
 
     return switch (repeatType) {
-      RepeatTypeEnum.once => '${months[startTime.month - 1]} ${startTime.day}, ${startTime.year}  $timeStr',
-      RepeatTypeEnum.daily => 'Every day  $timeStr',
-      RepeatTypeEnum.weekly => 'Weekly  $timeStr',
-      RepeatTypeEnum.monthly => 'Every month  $timeStr',
+      RepeatTypeEnum.once => '${DateFormat.yMMMd().format(startTime)}  $timeStr',
+      RepeatTypeEnum.daily => l10n.everyDayAt(timeStr),
+      RepeatTypeEnum.weekly => l10n.weeklyAt(timeStr),
+      RepeatTypeEnum.monthly => l10n.everyMonthAt(timeStr),
     };
   }
 

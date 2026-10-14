@@ -74,44 +74,4 @@ class ProcessSchedulesUseCase {
         return target;
     }
   }
-
-  String previewNextOccurrence(ScheduleEntity item, DateTime now) {
-    final nextOccurrence = calculateNextOccurrence(item, now);
-    if (nextOccurrence == null) return '';
-
-    final today = DateTime(now.year, now.month, now.day);
-    final tomorrow = today.add(const Duration(days: 1));
-    final nextDate = DateTime(nextOccurrence.year, nextOccurrence.month, nextOccurrence.day);
-    final timeStr = '${nextOccurrence.hour.toString().padLeft(2, '0')}:${nextOccurrence.minute.toString().padLeft(2, '0')}';
-
-    if (nextDate == today) {
-      return 'Today at $timeStr';
-    } else if (nextDate == tomorrow) {
-      return 'Tomorrow at $timeStr';
-    } else {
-      switch (item.repeatType) {
-        case RepeatTypeEnum.daily:
-          return 'Every day at $timeStr';
-        case RepeatTypeEnum.weekly:
-          if (item.repeatDays.isEmpty) return 'Weekly at $timeStr';
-          const dayLabels = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
-          final selectedDays = item.repeatDays.map((idx) => dayLabels[idx]).join(', ');
-          return 'Every $selectedDays at $timeStr';
-        case RepeatTypeEnum.monthly:
-          final day = nextDate.day;
-          var suffix = 'th';
-          if (day % 10 == 1 && day != 11) {
-            suffix = 'st';
-          } else if (day % 10 == 2 && day != 12) {
-            suffix = 'nd';
-          } else if (day % 10 == 3 && day != 13) {
-            suffix = 'rd';
-          }
-          return 'Every $day$suffix of the month at $timeStr';
-        case RepeatTypeEnum.once:
-          final months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-          return '${months[nextDate.month - 1]} ${nextDate.day}, ${nextDate.year} at $timeStr';
-      }
-    }
-  }
 }

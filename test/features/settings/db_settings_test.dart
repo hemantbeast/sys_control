@@ -70,7 +70,7 @@ void main() {
 
   test('saveValue rejects invalid dropdown options', () async {
     expect(await repository.saveValue('language', 'Klingon'), isFalse);
-    expect(await repository.saveValue('language', 'Français'), isTrue);
+    expect(await repository.saveValue('language', 'Hindi'), isTrue);
   });
 
   test('saveValue rejects overlong input', () async {
@@ -91,17 +91,17 @@ void main() {
 
   test('resetToDefaults clears overrides for one category only', () async {
     await repository.saveValue('brightness', '90');
-    await repository.saveValue('language', 'Français');
+    await repository.saveValue('language', 'Hindi');
 
     await repository.resetToDefaults(categoryId: 2);
 
     expect(await repository.getValue('brightness'), '70');
-    expect(await repository.getValue('language'), 'Français');
+    expect(await repository.getValue('language'), 'Hindi');
   });
 
   test('resetToDefaults without a category clears everything', () async {
     await repository.saveValue('brightness', '90');
-    await repository.saveValue('language', 'Français');
+    await repository.saveValue('language', 'Hindi');
 
     await repository.resetToDefaults();
 

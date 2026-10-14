@@ -17,7 +17,7 @@ INSERT INTO settings
    options, sort_order, description)
 VALUES
   (1, 'language',    'Language',    'dropdown', 'string', 'English',
-   '["English","한국어","Français","Italiano","Deutsch","Español"]', 0, 'App display language'),
+   '["English","Hindi","Kannada","Tamil","Korean"]', 0, 'App display language'),
 
   (1, 'temperature_unit', 'Temperature Unit', 'dropdown', 'string', 'Celsius',
    '["Celsius","Fahrenheit"]', 1, 'Temperature display unit'),

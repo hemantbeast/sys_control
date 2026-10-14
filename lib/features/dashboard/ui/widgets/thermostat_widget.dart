@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:sys_control/app/themes/colors.dart';
 import 'package:sys_control/core/extensions/context_extension.dart';
+import 'package:sys_control/core/extensions/enum_l10n_extension.dart';
 import 'package:sys_control/core/extensions/widget_extension.dart';
 import 'package:sys_control/features/dashboard/domain/enums/mode_enum.dart';
 import 'package:sys_control/features/dashboard/ui/painters/thermostat_painter.dart';
@@ -274,7 +275,7 @@ class _ModeButton extends StatelessWidget {
             SizedBox(width: 5 * scale),
           ],
           Text(
-            mode.name.toUpperCase(),
+            mode.shortLabel(S.of(context)).toUpperCase(),
             style: TextStyle(
               color: isActive ? mode.color : context.customTheme.lightGrayTextStyle.color,
               fontSize: 10 * scale,

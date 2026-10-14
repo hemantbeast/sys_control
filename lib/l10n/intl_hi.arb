@@ -1,0 +1,207 @@
+{
+  "appName": "सिस्टम कंट्रोल",
+  "ok": "ठीक है",
+  "cancel": "रद्द करें",
+  "yes": "हाँ",
+  "no": "नहीं",
+  "exit": "बाहर निकलें",
+  "submit": "सबमिट करें",
+  "save": "सहेजें",
+  "success": "सफल",
+  "pleaseWait": "कृपया प्रतीक्षा करें",
+  "somethingWentWrong": "कुछ गलत हो गया",
+  "somethingWentWrongDesc": "कृपया हमारा सहयोग करें, हम इसे जल्द से जल्द ठीक करेंगे और आपको अपडेट करेंगे।",
+  "noDataFound": "कोई डेटा नहीं मिला",
+  "checkInternet": "कृपया अपना इंटरनेट कनेक्शन जाँचें और पुनः प्रयास करें!",
+  "noInternet": "इंटरनेट उपलब्ध नहीं",
+
+  "dashboard": "डैशबोर्ड",
+  "thermostat": "थर्मोस्टैट",
+  "schedules": "शेड्यूल",
+  "history": "इतिहास",
+  "settings": "सेटिंग्स",
+
+  "target": "लक्ष्य",
+  "indoor": "इनडोर",
+  "outdoor": "आउटडोर",
+  "humidity": "नमी",
+  "temperature": "तापमान",
+  "temp": "तापमान",
+
+  "zoneComparison": "ज़ोन तुलना",
+  "energyCost": "ऊर्जा लागत",
+  "energyUsage": "ऊर्जा उपयोग",
+  "modeDistribution": "मोड वितरण",
+  "scheduleActivity": "शेड्यूल गतिविधि",
+
+  "fanSpeed": "फ़ैन स्पीड",
+  "energy": "ऊर्जा",
+  "airQuality": "वायु गुणवत्ता",
+  "cost": "लागत",
+  "efficiency": "दक्षता",
+
+  "min": "न्यून.",
+  "avg": "औसत",
+  "max": "अधिक.",
+  "total": "कुल",
+  "dailyAvg": "दैनिक औसत",
+  "rate": "दर",
+  "thisYear": "इस वर्ष",
+  "lastYear": "पिछला वर्ष",
+  "change": "बदलाव",
+  "hours": "घंटे",
+  "runs": "रन",
+
+  "invalidValue": "{label} के लिए अमान्य मान",
+  "@invalidValue": {
+    "placeholders": {
+      "label": {}
+    }
+  },
+
+  "name": "नाम",
+  "mode": "मोड",
+  "repeat": "दोहराव",
+  "time": "समय",
+  "timer": "टाइमर",
+  "select": "चुनें",
+  "update": "अपडेट",
+  "delete": "हटाएँ",
+  "running": "चल रहा है",
+
+  "addSchedule": "शेड्यूल जोड़ें",
+  "editSchedule": "शेड्यूल संपादित करें",
+  "newSchedule": "नया शेड्यूल",
+  "deleteSchedule": "शेड्यूल हटाएँ",
+  "deleteScheduleConfirm": "\"{name}\" हटाएँ?",
+  "@deleteScheduleConfirm": {
+    "placeholders": {
+      "name": {}
+    }
+  },
+  "noSchedulesFound": "कोई शेड्यूल नहीं मिला",
+  "noSchedulesFoundDesc": "अपना थर्मोस्टैट स्वचालित करने के लिए शेड्यूल बनाएँ",
+  "dateAndTime": "तारीख़ और समय",
+  "dayAndTime": "दिन और समय",
+  "selectDateTime": "तारीख़ और समय चुनें",
+  "selectTime": "समय चुनें",
+  "selectDayTime": "दिन और समय चुनें",
+  "selectDuration": "अवधि चुनें",
+  "nextRun": "अगला रन: {preview}",
+  "@nextRun": {
+    "placeholders": {
+      "preview": {}
+    }
+  },
+  "dayNumber": "दिन {day}",
+  "@dayNumber": {
+    "placeholders": {
+      "day": {}
+    }
+  },
+
+  "todayAt": "आज {time} बजे",
+  "@todayAt": {
+    "placeholders": {
+      "time": {}
+    }
+  },
+  "tomorrowAt": "कल {time} बजे",
+  "@tomorrowAt": {
+    "placeholders": {
+      "time": {}
+    }
+  },
+  "everyDayAt": "प्रतिदिन {time} बजे",
+  "@everyDayAt": {
+    "placeholders": {
+      "time": {}
+    }
+  },
+  "weeklyAt": "साप्ताहिक {time} बजे",
+  "@weeklyAt": {
+    "placeholders": {
+      "time": {}
+    }
+  },
+  "everyDaysAt": "हर {days} को {time} बजे",
+  "@everyDaysAt": {
+    "placeholders": {
+      "days": {},
+      "time": {}
+    }
+  },
+  "everyMonthAt": "हर महीने {time} बजे",
+  "@everyMonthAt": {
+    "placeholders": {
+      "time": {}
+    }
+  },
+  "everyMonthDayAt": "महीने की {day} तारीख़ को {time} बजे",
+  "@everyMonthDayAt": {
+    "placeholders": {
+      "day": {},
+      "time": {}
+    }
+  },
+  "dateAt": "{date}, {time} बजे",
+  "@dateAt": {
+    "placeholders": {
+      "date": {},
+      "time": {}
+    }
+  },
+
+  "once": "एक बार",
+  "daily": "दैनिक",
+  "weekly": "साप्ताहिक",
+  "monthly": "मासिक",
+  "yearly": "वार्षिक",
+
+  "selectMode": "मोड चुनें",
+  "fanSpeedTitle": "फ़ैन स्पीड",
+  "modeAuto": "ऑटो",
+  "modeHeat": "हीटिंग",
+  "modeCool": "कूलिंग",
+  "modeDry": "ड्राई",
+  "modeFan": "फ़ैन",
+  "modeHeatShort": "हीट",
+  "modeCoolShort": "कूल",
+  "modeAutoDesc": "स्वचालित नियंत्रण",
+  "modeHeatDesc": "गर्म हवा",
+  "modeCoolDesc": "ठंडी हवा",
+  "modeDryDesc": "नमी कम करें",
+  "modeFanDesc": "हवा संचार",
+  "fanAuto": "ऑटो",
+  "fanLow": "कम",
+  "fanMed": "मध्यम",
+  "fanHigh": "उच्च",
+
+  "splashTagline": "मॉनिटर ⸱ कंट्रोल ⸱ एनालाइज़",
+
+  "generalSettings": "सामान्य सेटिंग्स",
+  "display": "डिस्प्ले",
+  "audio": "ऑडियो",
+  "network": "नेटवर्क",
+  "language": "भाषा",
+  "timeZone": "समय क्षेत्र",
+  "autoUpdate": "ऑटो अपडेट",
+  "firmwareVersion": "फ़र्मवेयर संस्करण",
+  "brightness": "चमक",
+  "contrast": "कंट्रास्ट",
+  "colorTemperature": "रंग तापमान",
+  "nightMode": "नाइट मोड",
+  "temperatureUnit": "तापमान इकाई",
+  "masterVolume": "मुख्य ध्वनि स्तर",
+  "audioOutput": "ऑडियो आउटपुट",
+  "audioMode": "ऑडियो मोड",
+  "wifi": "Wi-Fi",
+  "hostname": "होस्टनाम",
+  "dnsTimeout": "DNS टाइमआउट",
+  "appDisplayLanguage": "ऐप की प्रदर्शन भाषा",
+  "ianaTimezoneDesc": "IANA समय क्षेत्र पहचानकर्ता",
+  "autoUpdateDesc": "फ़र्मवेयर अपडेट स्वतः इंस्टॉल करें",
+  "temperatureUnitDesc": "तापमान प्रदर्शन इकाई",
+  "hostnameDesc": "स्थानीय नेटवर्क पर डिवाइस का नाम",
+  "dnsTimeoutDesc": "DNS रिज़ॉल्यूशन अनुरोधों के लिए टाइमआउट"
+}

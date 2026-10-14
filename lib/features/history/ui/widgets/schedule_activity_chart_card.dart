@@ -1,6 +1,7 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:intl/intl.dart';
 import 'package:sys_control/core/extensions/context_extension.dart';
 import 'package:sys_control/features/history/domain/entities/schedule_activity_entity.dart';
 import 'package:sys_control/features/history/ui/widgets/chart_card_wrapper.dart';
@@ -78,7 +79,7 @@ class ScheduleActivityChartCard extends ConsumerWidget {
                   touchTooltipData: BarTouchTooltipData(
                     getTooltipItem: (group, groupIndex, rod, rodIndex) {
                       final activity = data[group.x];
-                      final dayName = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'][activity.date.weekday - 1];
+                      final dayName = DateFormat.E().format(activity.date);
                       return BarTooltipItem(
                         '$dayName ${activity.date.day}/${activity.date.month}\n${activity.count} ${l10n.runs}',
                         TextStyle(color: textColor, fontWeight: FontWeight.bold, fontSize: 12),

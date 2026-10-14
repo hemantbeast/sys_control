@@ -1,6 +1,6 @@
 {
   "appName": "System Control",
-  "ok": "Ok",
+  "ok": "OK",
   "cancel": "Cancel",
   "yes": "Yes",
   "no": "No",
@@ -57,5 +57,151 @@
     "placeholders": {
       "label": {}
     }
-  }
+  },
+
+  "name": "Name",
+  "mode": "Mode",
+  "repeat": "Repeat",
+  "time": "Time",
+  "timer": "Timer",
+  "select": "Select",
+  "update": "Update",
+  "delete": "Delete",
+  "running": "RUNNING",
+
+  "addSchedule": "Add Schedule",
+  "editSchedule": "Edit Schedule",
+  "newSchedule": "New Schedule",
+  "deleteSchedule": "Delete Schedule",
+  "deleteScheduleConfirm": "Delete \"{name}\"?",
+  "@deleteScheduleConfirm": {
+    "placeholders": {
+      "name": {}
+    }
+  },
+  "noSchedulesFound": "No Schedules Found",
+  "noSchedulesFoundDesc": "Create a schedule to automate your thermostat",
+  "dateAndTime": "Date & Time",
+  "dayAndTime": "Day & Time",
+  "selectDateTime": "Select Date & Time",
+  "selectTime": "Select Time",
+  "selectDayTime": "Select Day & Time",
+  "selectDuration": "Select Duration",
+  "nextRun": "Next run: {preview}",
+  "@nextRun": {
+    "placeholders": {
+      "preview": {}
+    }
+  },
+  "dayNumber": "Day {day}",
+  "@dayNumber": {
+    "placeholders": {
+      "day": {}
+    }
+  },
+
+  "todayAt": "Today at {time}",
+  "@todayAt": {
+    "placeholders": {
+      "time": {}
+    }
+  },
+  "tomorrowAt": "Tomorrow at {time}",
+  "@tomorrowAt": {
+    "placeholders": {
+      "time": {}
+    }
+  },
+  "everyDayAt": "Every day at {time}",
+  "@everyDayAt": {
+    "placeholders": {
+      "time": {}
+    }
+  },
+  "weeklyAt": "Weekly at {time}",
+  "@weeklyAt": {
+    "placeholders": {
+      "time": {}
+    }
+  },
+  "everyDaysAt": "Every {days} at {time}",
+  "@everyDaysAt": {
+    "placeholders": {
+      "days": {},
+      "time": {}
+    }
+  },
+  "everyMonthAt": "Every month at {time}",
+  "@everyMonthAt": {
+    "placeholders": {
+      "time": {}
+    }
+  },
+  "everyMonthDayAt": "Every day {day} of the month at {time}",
+  "@everyMonthDayAt": {
+    "placeholders": {
+      "day": {},
+      "time": {}
+    }
+  },
+  "dateAt": "{date} at {time}",
+  "@dateAt": {
+    "placeholders": {
+      "date": {},
+      "time": {}
+    }
+  },
+
+  "once": "Once",
+  "daily": "Daily",
+  "weekly": "Weekly",
+  "monthly": "Monthly",
+  "yearly": "Yearly",
+
+  "selectMode": "Select Mode",
+  "fanSpeedTitle": "Fan Speed",
+  "modeAuto": "Auto",
+  "modeHeat": "Heating",
+  "modeCool": "Cooling",
+  "modeDry": "Dry",
+  "modeFan": "Fan",
+  "modeHeatShort": "Heat",
+  "modeCoolShort": "Cool",
+  "modeAutoDesc": "Auto control",
+  "modeHeatDesc": "Warm air",
+  "modeCoolDesc": "Cool air",
+  "modeDryDesc": "Dehumidify",
+  "modeFanDesc": "Circulation",
+  "fanAuto": "Auto",
+  "fanLow": "Low",
+  "fanMed": "Med",
+  "fanHigh": "High",
+
+  "splashTagline": "MONITOR ⸱ CONTROL ⸱ ANALYSE",
+
+  "generalSettings": "General Settings",
+  "display": "Display",
+  "audio": "Audio",
+  "network": "Network",
+  "language": "Language",
+  "timeZone": "Time Zone",
+  "autoUpdate": "Auto Update",
+  "firmwareVersion": "Firmware Version",
+  "brightness": "Brightness",
+  "contrast": "Contrast",
+  "colorTemperature": "Color Temperature",
+  "nightMode": "Night Mode",
+  "temperatureUnit": "Temperature Unit",
+  "masterVolume": "Master Volume",
+  "audioOutput": "Audio Output",
+  "audioMode": "Audio Mode",
+  "wifi": "Wi-Fi",
+  "hostname": "Hostname",
+  "dnsTimeout": "DNS Timeout",
+  "appDisplayLanguage": "App display language",
+  "ianaTimezoneDesc": "IANA timezone identifier",
+  "autoUpdateDesc": "Automatically install firmware updates",
+  "temperatureUnitDesc": "Temperature display unit",
+  "hostnameDesc": "Device name on the local network",
+  "dnsTimeoutDesc": "Timeout for DNS resolution requests"
 }

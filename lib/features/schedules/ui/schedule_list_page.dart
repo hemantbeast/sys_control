@@ -7,6 +7,7 @@ import 'package:sys_control/core/extensions/context_extension.dart';
 import 'package:sys_control/features/schedules/ui/providers/schedule_list_provider.dart';
 import 'package:sys_control/features/schedules/ui/providers/timer_provider.dart';
 import 'package:sys_control/features/schedules/ui/widgets/schedule_list_item.dart';
+import 'package:sys_control/generated/l10n.dart';
 
 class ScheduleListPage extends ConsumerWidget {
   const ScheduleListPage({super.key});
@@ -30,7 +31,7 @@ class ScheduleListPage extends ConsumerWidget {
                     AppRouter.pushNamed(RouteEnum.addScheduleScreen.name);
                   },
                   icon: const Icon(Icons.add, size: 18),
-                  label: const Text('New Schedule'),
+                  label: Text(S.of(context).newSchedule),
                   style: ElevatedButton.styleFrom(
                     backgroundColor: actionColor,
                     foregroundColor: Colors.white,
@@ -70,26 +71,26 @@ class ScheduleListPage extends ConsumerWidget {
                                   borderRadius: BorderRadius.circular(14),
                                 ),
                                 title: Text(
-                                  'Delete Schedule',
+                                  S.of(ctx).deleteSchedule,
                                   style: ctx.customTheme.blackTextStyle,
                                 ),
                                 content: Text(
-                                  'Delete "${schedule.name}"?',
+                                  S.of(ctx).deleteScheduleConfirm(schedule.name),
                                   style: ctx.customTheme.grayTextStyle,
                                 ),
                                 actions: [
                                   TextButton(
                                     onPressed: () => Navigator.pop(ctx, false),
-                                    child: const Text(
-                                      'Cancel',
-                                      style: TextStyle(color: Colors.grey),
+                                    child: Text(
+                                      S.of(ctx).cancel,
+                                      style: const TextStyle(color: Colors.grey),
                                     ),
                                   ),
                                   TextButton(
                                     onPressed: () => Navigator.pop(ctx, true),
-                                    child: const Text(
-                                      'Delete',
-                                      style: TextStyle(color: Color(0xFFEF5350)),
+                                    child: Text(
+                                      S.of(ctx).delete,
+                                      style: const TextStyle(color: Color(0xFFEF5350)),
                                     ),
                                   ),
                                 ],
@@ -139,12 +140,12 @@ class ScheduleListPage extends ConsumerWidget {
           ),
           const SizedBox(height: 16),
           Text(
-            'No Schedules Found',
+            S.of(context).noSchedulesFound,
             style: context.customTheme.blackTextStyle.copyWith(fontSize: 18),
           ),
           const SizedBox(height: 8),
           Text(
-            'Create a schedule to automate your thermostat',
+            S.of(context).noSchedulesFoundDesc,
             style: context.customTheme.lightGrayTextStyle.copyWith(fontSize: 12),
           ),
           const SizedBox(height: 24),
@@ -153,7 +154,7 @@ class ScheduleListPage extends ConsumerWidget {
               AppRouter.pushNamed(RouteEnum.addScheduleScreen.name);
             },
             icon: const Icon(Icons.add, size: 18),
-            label: const Text('New Schedule'),
+            label: Text(S.of(context).newSchedule),
             style: ElevatedButton.styleFrom(
               backgroundColor: actionColor,
               foregroundColor: Colors.white,
@@ -175,19 +176,19 @@ class ScheduleListPage extends ConsumerWidget {
             borderRadius: BorderRadius.circular(14),
           ),
           title: Text(
-            'Delete Schedule',
+            S.of(ctx).deleteSchedule,
             style: ctx.customTheme.blackTextStyle,
           ),
           content: Text(
-            'Delete "$name"?',
+            S.of(ctx).deleteScheduleConfirm(name),
             style: ctx.customTheme.grayTextStyle,
           ),
           actions: [
             TextButton(
               onPressed: () => Navigator.pop(ctx),
-              child: const Text(
-                'Cancel',
-                style: TextStyle(color: Colors.grey),
+              child: Text(
+                S.of(ctx).cancel,
+                style: const TextStyle(color: Colors.grey),
               ),
             ),
             TextButton(
@@ -195,9 +196,9 @@ class ScheduleListPage extends ConsumerWidget {
                 notifier.deleteSchedule(id);
                 Navigator.pop(ctx);
               },
-              child: const Text(
-                'Delete',
-                style: TextStyle(color: Color(0xFFEF5350)),
+              child: Text(
+                S.of(ctx).delete,
+                style: const TextStyle(color: Color(0xFFEF5350)),
               ),
             ),
           ],

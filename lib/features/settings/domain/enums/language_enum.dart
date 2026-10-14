@@ -1,10 +1,9 @@
 enum LanguageEnum {
   english('English', 'en'),
-  korean('한국어', 'ko'),
-  french('Français', 'fr'),
-  italian('Italiano', 'it'),
-  german('Deutsch', 'de'),
-  spanish('Español', 'es');
+  hindi('Hindi', 'hi'),
+  kannada('Kannada', 'kn'),
+  tamil('Tamil', 'ta'),
+  korean('Korean', 'ko');
 
   const LanguageEnum(this.longName, this.code);
 

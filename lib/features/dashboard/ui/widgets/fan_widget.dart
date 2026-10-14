@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:sys_control/app/themes/colors.dart';
 import 'package:sys_control/core/extensions/context_extension.dart';
+import 'package:sys_control/core/extensions/enum_l10n_extension.dart';
 import 'package:sys_control/features/dashboard/domain/entities/energy_entity.dart';
 import 'package:sys_control/features/dashboard/domain/enums/fan_speed_enum.dart';
 import 'package:sys_control/features/dashboard/ui/painters/fan_painter.dart';
@@ -124,7 +125,7 @@ class _FanWidgetState extends ConsumerState<FanWidget> with SingleTickerProvider
                   ),
                 ),
                 Text(
-                  provider.fanSpeed.name.toUpperCase(),
+                  provider.fanSpeed.label(l10n).toUpperCase(),
                   textAlign: TextAlign.center,
                   style: context.customTheme.grayTextStyle.copyWith(
                     fontSize: 12 * scale,

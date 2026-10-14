@@ -1,0 +1,207 @@
+{
+  "appName": "ಸಿಸ್ಟಮ್ ಕಂಟ್ರೋಲ್",
+  "ok": "ಸರಿ",
+  "cancel": "ರದ್ದುಮಾಡು",
+  "yes": "ಹೌದು",
+  "no": "ಇಲ್ಲ",
+  "exit": "ನಿರ್ಗಮಿಸು",
+  "submit": "ಸಲ್ಲಿಸು",
+  "save": "ಉಳಿಸು",
+  "success": "ಯಶಸ್ಸು",
+  "pleaseWait": "ದಯವಿಟ್ಟು ನಿರೀಕ್ಷಿಸಿ",
+  "somethingWentWrong": "ಏನೋ ತಪ್ಪಾಗಿದೆ",
+  "somethingWentWrongDesc": "ದಯವಿಟ್ಟು ನಮ್ಮೊಂದಿಗೆ ಸಹಕರಿಸಿ, ನಾವು ಆದಷ್ಟು ಬೇಗನೆ ಸರಿಪಡಿಸಿ ನಿಮಗೆ ತಿಳಿಸುತ್ತೇವೆ.",
+  "noDataFound": "ಯಾವುದೇ ಡೇಟಾ ಸಿಗಲಿಲ್ಲ",
+  "checkInternet": "ದಯವಿಟ್ಟು ನಿಮ್ಮ ಇಂಟರ್ನೆಟ್ ಸಂಪರ್ಕವನ್ನು ಪರಿಶೀಲಿಸಿ ಮತ್ತು ಮತ್ತೆ ಪ್ರಯತ್ನಿಸಿ!",
+  "noInternet": "ಇಂಟರ್ನೆಟ್ ಲಭ್ಯವಿಲ್ಲ",
+
+  "dashboard": "ಡ್ಯಾಶ್‌ಬೋರ್ಡ್",
+  "thermostat": "ಥರ್ಮೋಸ್ಟಾಟ್",
+  "schedules": "ಶೆಡ್ಯೂಲ್‌ಗಳು",
+  "history": "ಇತಿಹಾಸ",
+  "settings": "ಸೆಟ್ಟಿಂಗ್‌ಗಳು",
+
+  "target": "ಗುರಿ",
+  "indoor": "ಒಳಾಂಗಣ",
+  "outdoor": "ಹೊರಾಂಗಣ",
+  "humidity": "ತೇವಾಂಶ",
+  "temperature": "ತಾಪಮಾನ",
+  "temp": "ತಾಪಮಾನ",
+
+  "zoneComparison": "ವಲಯ ಹೋಲಿಕೆ",
+  "energyCost": "ಶಕ್ತಿ ವೆಚ್ಚ",
+  "energyUsage": "ಶಕ್ತಿ ಬಳಕೆ",
+  "modeDistribution": "ಮೋಡ್ ವಿತರಣೆ",
+  "scheduleActivity": "ಶೆಡ್ಯೂಲ್ ಚಟುವಟಿಕೆ",
+
+  "fanSpeed": "ಫ್ಯಾನ್ ವೇಗ",
+  "energy": "ಶಕ್ತಿ",
+  "airQuality": "ಗಾಳಿ ಗುಣಮಟ್ಟ",
+  "cost": "ವೆಚ್ಚ",
+  "efficiency": "ದಕ್ಷತೆ",
+
+  "min": "ಕನಿಷ್ಠ",
+  "avg": "ಸರಾಸರಿ",
+  "max": "ಗರಿಷ್ಠ",
+  "total": "ಒಟ್ಟು",
+  "dailyAvg": "ದೈನಂದಿನ ಸರಾಸರಿ",
+  "rate": "ದರ",
+  "thisYear": "ಈ ವರ್ಷ",
+  "lastYear": "ಕಳೆದ ವರ್ಷ",
+  "change": "ಬದಲಾವಣೆ",
+  "hours": "ಗಂಟೆಗಳು",
+  "runs": "ಸಲ",
+
+  "invalidValue": "{label} ಗೆ ಅಮಾನ್ಯ ಮೌಲ್ಯ",
+  "@invalidValue": {
+    "placeholders": {
+      "label": {}
+    }
+  },
+
+  "name": "ಹೆಸರು",
+  "mode": "ಮೋಡ್",
+  "repeat": "ಪುನರಾವರ್ತನೆ",
+  "time": "ಸಮಯ",
+  "timer": "ಟೈಮರ್",
+  "select": "ಆಯ್ಕೆಮಾಡಿ",
+  "update": "ನವೀಕರಿಸು",
+  "delete": "ಅಳಿಸು",
+  "running": "ಚಾಲನೆಯಲ್ಲಿದೆ",
+
+  "addSchedule": "ಶೆಡ್ಯೂಲ್ ಸೇರಿಸಿ",
+  "editSchedule": "ಶೆಡ್ಯೂಲ್ ಸಂಪಾದಿಸಿ",
+  "newSchedule": "ಹೊಸ ಶೆಡ್ಯೂಲ್",
+  "deleteSchedule": "ಶೆಡ್ಯೂಲ್ ಅಳಿಸಿ",
+  "deleteScheduleConfirm": "\"{name}\" ಅಳಿಸುವುದೇ?",
+  "@deleteScheduleConfirm": {
+    "placeholders": {
+      "name": {}
+    }
+  },
+  "noSchedulesFound": "ಯಾವುದೇ ಶೆಡ್ಯೂಲ್ ಸಿಗಲಿಲ್ಲ",
+  "noSchedulesFoundDesc": "ನಿಮ್ಮ ಥರ್ಮೋಸ್ಟಾಟ್ ಅನ್ನು ಸ್ವಯಂಚಾಲಿತಗೊಳಿಸಲು ಶೆಡ್ಯೂಲ್ ರಚಿಸಿ",
+  "dateAndTime": "ದಿನಾಂಕ ಮತ್ತು ಸಮಯ",
+  "dayAndTime": "ದಿನ ಮತ್ತು ಸಮಯ",
+  "selectDateTime": "ದಿನಾಂಕ ಮತ್ತು ಸಮಯ ಆಯ್ಕೆಮಾಡಿ",
+  "selectTime": "ಸಮಯ ಆಯ್ಕೆಮಾಡಿ",
+  "selectDayTime": "ದಿನ ಮತ್ತು ಸಮಯ ಆಯ್ಕೆಮಾಡಿ",
+  "selectDuration": "ಅವಧಿ ಆಯ್ಕೆಮಾಡಿ",
+  "nextRun": "ಮುಂದಿನ ಚಲನೆ: {preview}",
+  "@nextRun": {
+    "placeholders": {
+      "preview": {}
+    }
+  },
+  "dayNumber": "ದಿನ {day}",
+  "@dayNumber": {
+    "placeholders": {
+      "day": {}
+    }
+  },
+
+  "todayAt": "ಇಂದು {time} ಕ್ಕೆ",
+  "@todayAt": {
+    "placeholders": {
+      "time": {}
+    }
+  },
+  "tomorrowAt": "ನಾಳೆ {time} ಕ್ಕೆ",
+  "@tomorrowAt": {
+    "placeholders": {
+      "time": {}
+    }
+  },
+  "everyDayAt": "ಪ್ರತಿದಿನ {time} ಕ್ಕೆ",
+  "@everyDayAt": {
+    "placeholders": {
+      "time": {}
+    }
+  },
+  "weeklyAt": "ಸಾಪ್ತಾಹಿಕ {time} ಕ್ಕೆ",
+  "@weeklyAt": {
+    "placeholders": {
+      "time": {}
+    }
+  },
+  "everyDaysAt": "ಪ್ರತಿ {days} {time} ಕ್ಕೆ",
+  "@everyDaysAt": {
+    "placeholders": {
+      "days": {},
+      "time": {}
+    }
+  },
+  "everyMonthAt": "ಪ್ರತಿ ತಿಂಗಳು {time} ಕ್ಕೆ",
+  "@everyMonthAt": {
+    "placeholders": {
+      "time": {}
+    }
+  },
+  "everyMonthDayAt": "ತಿಂಗಳ {day} ರಂದು {time} ಕ್ಕೆ",
+  "@everyMonthDayAt": {
+    "placeholders": {
+      "day": {},
+      "time": {}
+    }
+  },
+  "dateAt": "{date}, {time} ಕ್ಕೆ",
+  "@dateAt": {
+    "placeholders": {
+      "date": {},
+      "time": {}
+    }
+  },
+
+  "once": "ಒಮ್ಮೆ",
+  "daily": "ಪ್ರತಿದಿನ",
+  "weekly": "ಸಾಪ್ತಾಹಿಕ",
+  "monthly": "ಮಾಸಿಕ",
+  "yearly": "ವಾರ್ಷಿಕ",
+
+  "selectMode": "ಮೋಡ್ ಆಯ್ಕೆಮಾಡಿ",
+  "fanSpeedTitle": "ಫ್ಯಾನ್ ವೇಗ",
+  "modeAuto": "ಆಟೋ",
+  "modeHeat": "ಹೀಟಿಂಗ್",
+  "modeCool": "ಕೂಲಿಂಗ್",
+  "modeDry": "ಡ್ರೈ",
+  "modeFan": "ಫ್ಯಾನ್",
+  "modeHeatShort": "ಹೀಟ್",
+  "modeCoolShort": "ಕೂಲ್",
+  "modeAutoDesc": "ಸ್ವಯಂಚಾಲಿತ ನಿಯಂತ್ರಣ",
+  "modeHeatDesc": "ಬೆಚ್ಚನೆಯ ಗಾಳಿ",
+  "modeCoolDesc": "ತಂಪಾದ ಗಾಳಿ",
+  "modeDryDesc": "ತೇವಾಂಶ ತೆಗೆಯುವಿಕೆ",
+  "modeFanDesc": "ಗಾಳಿ ಪರಿಚಲನೆ",
+  "fanAuto": "ಆಟೋ",
+  "fanLow": "ಕಡಿಮೆ",
+  "fanMed": "ಮಧ್ಯಮ",
+  "fanHigh": "ಹೆಚ್ಚು",
+
+  "splashTagline": "ಮೇಲ್ವಿಚಾರಣೆ ⸱ ನಿಯಂತ್ರಣ ⸱ ವಿಶ್ಲೇಷಣೆ",
+
+  "generalSettings": "ಸಾಮಾನ್ಯ ಸೆಟ್ಟಿಂಗ್‌ಗಳು",
+  "display": "ಡಿಸ್‌ಪ್ಲೇ",
+  "audio": "ಆಡಿಯೊ",
+  "network": "ನೆಟ್‌ವರ್ಕ್",
+  "language": "ಭಾಷೆ",
+  "timeZone": "ಸಮಯ ವಲಯ",
+  "autoUpdate": "ಸ್ವಯಂ ನವೀಕರಣ",
+  "firmwareVersion": "ಫರ್ಮ್‌ವೇರ್ ಆವೃತ್ತಿ",
+  "brightness": "ಪ್ರಖರತೆ",
+  "contrast": "ವ್ಯತಿರಿಕ್ತತೆ",
+  "colorTemperature": "ಬಣ್ಣ ತಾಪಮಾನ",
+  "nightMode": "ರಾತ್ರಿ ಮೋಡ್",
+  "temperatureUnit": "ತಾಪಮಾನ ಘಟಕ",
+  "masterVolume": "ಮುಖ್ಯ ಧ್ವನಿ ಮಟ್ಟ",
+  "audioOutput": "ಆಡಿಯೊ ಔಟ್‌ಪುಟ್",
+  "audioMode": "ಆಡಿಯೊ ಮೋಡ್",
+  "wifi": "Wi-Fi",
+  "hostname": "ಹೋಸ್ಟ್‌ಹೆಸರು",
+  "dnsTimeout": "DNS ಕಾಲಾವಧಿ",
+  "appDisplayLanguage": "ಅಪ್ ಪ್ರದರ್ಶನ ಭಾಷೆ",
+  "ianaTimezoneDesc": "IANA ಸಮಯ ವಲಯ ಗುರುತಿಸುವಿಕೆ",
+  "autoUpdateDesc": "ಫರ್ಮ್‌ವೇರ್ ನವೀಕರಣಗಳನ್ನು ಸ್ವಯಂಚಾಲಿತವಾಗಿ ಸ್ಥಾಪಿಸಿ",
+  "temperatureUnitDesc": "ತಾಪಮಾನ ಪ್ರದರ್ಶನ ಘಟಕ",
+  "hostnameDesc": "ಸ್ಥಳೀಯ ನೆಟ್‌ವರ್ಕ್‌ನಲ್ಲಿ ಸಾಧನದ ಹೆಸರು",
+  "dnsTimeoutDesc": "DNS ಬಿಡಿಸುವಿಕೆ ವಿನಂತಿಗಳಿಗೆ ಕಾಲಾವಧಿ"
+}

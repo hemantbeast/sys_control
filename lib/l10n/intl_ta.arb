@@ -1,0 +1,207 @@
+{
+  "appName": "கணினி கட்டுப்பாடு",
+  "ok": "சரி",
+  "cancel": "ரத்து செய்யவும்",
+  "yes": "ஆம்",
+  "no": "இல்லை",
+  "exit": "வெளியேறு",
+  "submit": "சமர்ப்பிக்கவும்",
+  "save": "சேமிக்கவும்",
+  "success": "வெற்றி",
+  "pleaseWait": "தயவுசெய்து காத்திருக்கவும்",
+  "somethingWentWrong": "ஏதோ தவறு நடந்தது",
+  "somethingWentWrongDesc": "எங்களுக்கு ஒத்துழையுங்கள், நாங்கள் விரைவில் சரிசெய்து உங்களுக்குத் தெரிவிப்போம்.",
+  "noDataFound": "தரவு எதுவும் இல்லை",
+  "checkInternet": "உங்கள் இணைய இணைப்பைச் சரிபார்த்து மீண்டும் முயற்சிக்கவும்!",
+  "noInternet": "இணைய இணைப்பு இல்லை",
+
+  "dashboard": "டாஷ்போர்டு",
+  "thermostat": "வெப்பநிலைக் கட்டுப்படுத்தி",
+  "schedules": "அட்டவணைகள்",
+  "history": "வரலாறு",
+  "settings": "அமைப்புகள்",
+
+  "target": "இலக்கு",
+  "indoor": "உள்ளக",
+  "outdoor": "வெளிப்புற",
+  "humidity": "ஈரப்பதம்",
+  "temperature": "வெப்பநிலை",
+  "temp": "வெப்ப.",
+
+  "zoneComparison": "மண்டல ஒப்பீடு",
+  "energyCost": "ஆற்றல் செலவு",
+  "energyUsage": "ஆற்றல் பயன்பாடு",
+  "modeDistribution": "பயன்முறை பரவல்",
+  "scheduleActivity": "அட்டவணை செயல்பாடு",
+
+  "fanSpeed": "விசிறி வேகம்",
+  "energy": "ஆற்றல்",
+  "airQuality": "காற்றுத் தரம்",
+  "cost": "செலவு",
+  "efficiency": "செயல்திறன்",
+
+  "min": "குறைந்தபட்சம்",
+  "avg": "சராசரி",
+  "max": "அதிகபட்சம்",
+  "total": "மொத்தம்",
+  "dailyAvg": "தினசரி சராசரி",
+  "rate": "வீதம்",
+  "thisYear": "இந்த ஆண்டு",
+  "lastYear": "கடந்த ஆண்டு",
+  "change": "மாற்றம்",
+  "hours": "மணிநேரம்",
+  "runs": "இயக்கங்கள்",
+
+  "invalidValue": "{label} க்கு தவறான மதிப்பு",
+  "@invalidValue": {
+    "placeholders": {
+      "label": {}
+    }
+  },
+
+  "name": "பெயர்",
+  "mode": "முறை",
+  "repeat": "மறுபடியும்",
+  "time": "நேரம்",
+  "timer": "டைமர்",
+  "select": "தேர்ந்தெடு",
+  "update": "புதுப்பிக்கவும்",
+  "delete": "நீக்கு",
+  "running": "இயங்குகிறது",
+
+  "addSchedule": "அட்டவணையைச் சேர்",
+  "editSchedule": "அட்டவணையைத் திருத்து",
+  "newSchedule": "புதிய அட்டவணை",
+  "deleteSchedule": "அட்டவணையை நீக்கு",
+  "deleteScheduleConfirm": "\"{name}\" ஐ நீக்கவா?",
+  "@deleteScheduleConfirm": {
+    "placeholders": {
+      "name": {}
+    }
+  },
+  "noSchedulesFound": "அட்டவணைகள் எதுவும் இல்லை",
+  "noSchedulesFoundDesc": "வெப்பநிலைக் கட்டுப்படுத்தியை தானியங்கி ஆக்க ஒரு அட்டவணையை உருவாக்கவும்",
+  "dateAndTime": "தேதி மற்றும் நேரம்",
+  "dayAndTime": "நாள் மற்றும் நேரம்",
+  "selectDateTime": "தேதி மற்றும் நேரத்தைத் தேர்ந்தெடுக்கவும்",
+  "selectTime": "நேரத்தைத் தேர்ந்தெடுக்கவும்",
+  "selectDayTime": "நாள் மற்றும் நேரத்தைத் தேர்ந்தெடுக்கவும்",
+  "selectDuration": "கால அளவைத் தேர்ந்தெடுக்கவும்",
+  "nextRun": "அடுத்த இயக்கம்: {preview}",
+  "@nextRun": {
+    "placeholders": {
+      "preview": {}
+    }
+  },
+  "dayNumber": "நாள் {day}",
+  "@dayNumber": {
+    "placeholders": {
+      "day": {}
+    }
+  },
+
+  "todayAt": "இன்று {time} மணிக்கு",
+  "@todayAt": {
+    "placeholders": {
+      "time": {}
+    }
+  },
+  "tomorrowAt": "நாளை {time} மணிக்கு",
+  "@tomorrowAt": {
+    "placeholders": {
+      "time": {}
+    }
+  },
+  "everyDayAt": "தினமும் {time} மணிக்கு",
+  "@everyDayAt": {
+    "placeholders": {
+      "time": {}
+    }
+  },
+  "weeklyAt": "வாரந்தோறும் {time} மணிக்கு",
+  "@weeklyAt": {
+    "placeholders": {
+      "time": {}
+    }
+  },
+  "everyDaysAt": "ஒவ்வொரு {days} நாட்களும் {time} மணிக்கு",
+  "@everyDaysAt": {
+    "placeholders": {
+      "days": {},
+      "time": {}
+    }
+  },
+  "everyMonthAt": "மாதந்தோறும் {time} மணிக்கு",
+  "@everyMonthAt": {
+    "placeholders": {
+      "time": {}
+    }
+  },
+  "everyMonthDayAt": "மாதத்தின் {day} தேதி {time} மணிக்கு",
+  "@everyMonthDayAt": {
+    "placeholders": {
+      "day": {},
+      "time": {}
+    }
+  },
+  "dateAt": "{date}, {time} மணிக்கு",
+  "@dateAt": {
+    "placeholders": {
+      "date": {},
+      "time": {}
+    }
+  },
+
+  "once": "ஒரு முறை",
+  "daily": "தினமும்",
+  "weekly": "வாராந்திரம்",
+  "monthly": "மாதாந்திரம்",
+  "yearly": "ஆண்டுதோறும்",
+
+  "selectMode": "முறையைத் தேர்ந்தெடுக்கவும்",
+  "fanSpeedTitle": "விசிறி வேகம்",
+  "modeAuto": "தானியங்கி",
+  "modeHeat": "வெப்பமூட்டல்",
+  "modeCool": "குளிரூட்டல்",
+  "modeDry": "உலர்",
+  "modeFan": "விசிறி",
+  "modeHeatShort": "வெப்பம்",
+  "modeCoolShort": "குளிர்",
+  "modeAutoDesc": "தானியங்கி கட்டுப்பாடு",
+  "modeHeatDesc": "வெப்பக் காற்று",
+  "modeCoolDesc": "குளிர் காற்று",
+  "modeDryDesc": "ஈரப்பதம் நீக்கல்",
+  "modeFanDesc": "காற்று சுழற்சி",
+  "fanAuto": "தானியங்கி",
+  "fanLow": "குறைவு",
+  "fanMed": "நடுத்தரம்",
+  "fanHigh": "அதிகம்",
+
+  "splashTagline": "கண்காணிப்பு ⸱ கட்டுப்பாடு ⸱ பகுப்பாய்வு",
+
+  "generalSettings": "பொது அமைப்புகள்",
+  "display": "காட்சி",
+  "audio": "ஒலி",
+  "network": "நெட்வொர்க்",
+  "language": "மொழி",
+  "timeZone": "நேர மண்டலம்",
+  "autoUpdate": "தானியங்கி புதுப்பிப்பு",
+  "firmwareVersion": "ஃபார்ம்வேர் பதிப்பு",
+  "brightness": "ஒளிர்வு",
+  "contrast": "மாறுபாடு",
+  "colorTemperature": "வண்ண வெப்பநிலை",
+  "nightMode": "இரவு பயன்முறை",
+  "temperatureUnit": "வெப்பநிலை அலகு",
+  "masterVolume": "முதன்மை ஒலி அளவு",
+  "audioOutput": "ஒலி வெளியீடு",
+  "audioMode": "ஒலி பயன்முறை",
+  "wifi": "வைஃபை",
+  "hostname": "ஹோஸ்ட் பெயர்",
+  "dnsTimeout": "DNS கால அளவு",
+  "appDisplayLanguage": "செயலியின் காட்சி மொழி",
+  "ianaTimezoneDesc": "IANA நேர மண்டல அடையாளம்",
+  "autoUpdateDesc": "ஃபார்ம்வேர் புதுப்பிப்புகளைத் தானாக நிறுவவும்",
+  "temperatureUnitDesc": "வெப்பநிலை காட்சி அலகு",
+  "hostnameDesc": "உள்ளூர் நெட்வொர்க்கில் சாதனப் பெயர்",
+  "dnsTimeoutDesc": "DNS தீர்வு கோரிக்கைகளுக்கான கால அளவு"
+}

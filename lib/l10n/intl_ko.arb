@@ -52,5 +52,156 @@
   "hours": "시간",
   "runs": "실행",
 
-  "invalidValue": "{label}의 값이 잘못되었습니다"
+  "invalidValue": "{label}의 값이 잘못되었습니다",
+  "@invalidValue": {
+    "placeholders": {
+      "label": {}
+    }
+  },
+
+  "name": "이름",
+  "mode": "모드",
+  "repeat": "반복",
+  "time": "시간",
+  "timer": "타이머",
+  "select": "선택",
+  "update": "업데이트",
+  "delete": "삭제",
+  "running": "실행 중",
+
+  "addSchedule": "일정 추가",
+  "editSchedule": "일정 수정",
+  "newSchedule": "새 일정",
+  "deleteSchedule": "일정 삭제",
+  "deleteScheduleConfirm": "\"{name}\"을(를) 삭제할까요?",
+  "@deleteScheduleConfirm": {
+    "placeholders": {
+      "name": {}
+    }
+  },
+  "noSchedulesFound": "일정이 없습니다",
+  "noSchedulesFoundDesc": "온도 조절을 자동화할 일정을 만들어 보세요",
+  "dateAndTime": "날짜 및 시간",
+  "dayAndTime": "요일 및 시간",
+  "selectDateTime": "날짜 및 시간 선택",
+  "selectTime": "시간 선택",
+  "selectDayTime": "요일 및 시간 선택",
+  "selectDuration": "지속 시간 선택",
+  "nextRun": "다음 실행: {preview}",
+  "@nextRun": {
+    "placeholders": {
+      "preview": {}
+    }
+  },
+  "dayNumber": "{day}일차",
+  "@dayNumber": {
+    "placeholders": {
+      "day": {}
+    }
+  },
+
+  "todayAt": "오늘 {time}",
+  "@todayAt": {
+    "placeholders": {
+      "time": {}
+    }
+  },
+  "tomorrowAt": "내일 {time}",
+  "@tomorrowAt": {
+    "placeholders": {
+      "time": {}
+    }
+  },
+  "everyDayAt": "매일 {time}",
+  "@everyDayAt": {
+    "placeholders": {
+      "time": {}
+    }
+  },
+  "weeklyAt": "매주 {time}",
+  "@weeklyAt": {
+    "placeholders": {
+      "time": {}
+    }
+  },
+  "everyDaysAt": "{days}마다 {time}",
+  "@everyDaysAt": {
+    "placeholders": {
+      "days": {},
+      "time": {}
+    }
+  },
+  "everyMonthAt": "매월 {time}",
+  "@everyMonthAt": {
+    "placeholders": {
+      "time": {}
+    }
+  },
+  "everyMonthDayAt": "매달 {day}일 {time}",
+  "@everyMonthDayAt": {
+    "placeholders": {
+      "day": {},
+      "time": {}
+    }
+  },
+  "dateAt": "{date} {time}",
+  "@dateAt": {
+    "placeholders": {
+      "date": {},
+      "time": {}
+    }
+  },
+
+  "once": "한 번",
+  "daily": "매일",
+  "weekly": "매주",
+  "monthly": "매월",
+  "yearly": "매년",
+
+  "selectMode": "모드 선택",
+  "fanSpeedTitle": "팬 속도",
+  "modeAuto": "자동",
+  "modeHeat": "난방",
+  "modeCool": "냉방",
+  "modeDry": "제습",
+  "modeFan": "송풍",
+  "modeHeatShort": "난방",
+  "modeCoolShort": "냉방",
+  "modeAutoDesc": "자동 제어",
+  "modeHeatDesc": "따뜻한 바람",
+  "modeCoolDesc": "시원한 바람",
+  "modeDryDesc": "습기 제거",
+  "modeFanDesc": "공기 순환",
+  "fanAuto": "자동",
+  "fanLow": "약",
+  "fanMed": "중",
+  "fanHigh": "강",
+
+  "splashTagline": "모니터링 ⸱ 제어 ⸱ 분석",
+
+  "generalSettings": "일반 설정",
+  "display": "디스플레이",
+  "audio": "오디오",
+  "network": "네트워크",
+  "language": "언어",
+  "timeZone": "시간대",
+  "autoUpdate": "자동 업데이트",
+  "firmwareVersion": "펌웨어 버전",
+  "brightness": "밝기",
+  "contrast": "대비",
+  "colorTemperature": "색온도",
+  "nightMode": "야간 모드",
+  "temperatureUnit": "온도 단위",
+  "masterVolume": "기본 음량",
+  "audioOutput": "오디오 출력",
+  "audioMode": "오디오 모드",
+  "wifi": "Wi-Fi",
+  "hostname": "호스트 이름",
+  "dnsTimeout": "DNS 제한 시간",
+  "appDisplayLanguage": "앱 표시 언어",
+  "ianaTimezoneDesc": "IANA 시간대 식별자",
+  "autoUpdateDesc": "펌웨어 업데이트 자동 설치",
+  "temperatureUnitDesc": "온도 표시 단위",
+  "hostnameDesc": "로컬 네트워크의 장치 이름",
+  "dnsTimeoutDesc": "DNS 확인 요청 제한 시간"
 }

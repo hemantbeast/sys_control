@@ -4,9 +4,11 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:sys_control/app/routes/app_router.dart';
 import 'package:sys_control/app/themes/colors.dart';
 import 'package:sys_control/core/extensions/context_extension.dart';
+import 'package:sys_control/core/extensions/enum_l10n_extension.dart';
 import 'package:sys_control/core/extensions/widget_extension.dart';
 import 'package:sys_control/features/dashboard/domain/enums/mode_enum.dart';
 import 'package:sys_control/features/thermostat/ui/providers/thermostat_provider.dart';
+import 'package:sys_control/generated/l10n.dart';
 
 class ModeSelectionPage extends ConsumerWidget {
   const ModeSelectionPage({super.key});
@@ -25,7 +27,7 @@ class ModeSelectionPage extends ConsumerWidget {
           icon: Icon(Icons.arrow_back_ios_rounded),
           onPressed: AppRouter.pop,
         ),
-        title: const Text('Select Mode'),
+        title: Text(S.of(context).selectMode),
         centerTitle: true,
       ),
       body: GridView.builder(
@@ -105,7 +107,7 @@ class _ModeCard extends StatelessWidget {
           ),
           const SizedBox(height: 12),
           Text(
-            mode.longName,
+            mode.label(S.of(context)),
             style: TextStyle(
               color: isActive ? mode.color : context.customTheme.blackTextStyle.color,
               fontSize: 15,
@@ -114,7 +116,7 @@ class _ModeCard extends StatelessWidget {
           ),
           const SizedBox(height: 4),
           Text(
-            _descriptionForMode(mode),
+            mode.description(S.of(context)),
             style: const TextStyle(
               color: slateGray,
               fontSize: 11,
@@ -139,16 +141,6 @@ class _ModeCard extends StatelessWidget {
       ModeEnum.cool => Icons.ac_unit_rounded,
       ModeEnum.dry => Icons.water_drop_outlined,
       ModeEnum.fan => Icons.air_rounded,
-    };
-  }
-
-  String _descriptionForMode(ModeEnum mode) {
-    return switch (mode) {
-      ModeEnum.auto => 'Auto control',
-      ModeEnum.heat => 'Warm air',
-      ModeEnum.cool => 'Cool air',
-      ModeEnum.dry => 'Dehumidify',
-      ModeEnum.fan => 'Circulation',
     };
   }
 }

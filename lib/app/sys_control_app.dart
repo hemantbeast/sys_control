@@ -18,7 +18,7 @@ class SysControlApp extends ConsumerWidget {
     final settings = ref.watch(appSettingsProvider);
 
     return MaterialApp.router(
-      title: 'SysControl',
+      onGenerateTitle: (context) => S.of(context).appName,
       debugShowCheckedModeBanner: false,
       theme: theme.lightTheme,
       darkTheme: theme.darkTheme,

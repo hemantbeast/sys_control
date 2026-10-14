@@ -102,7 +102,7 @@ class _SplashPageState extends State<SplashPage> with SingleTickerProviderStateM
             ),
             const SizedBox(height: 8),
             Text(
-              'MONITOR ⸱ CONTROL ⸱ ANALYSE',
+              S.of(context).splashTagline,
               style: context.whiteTextStyle.copyWith(
                 fontSize: 12,
                 letterSpacing: 2,

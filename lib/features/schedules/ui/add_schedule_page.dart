@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:intl/intl.dart';
 import 'package:scroll_date_picker/scroll_date_picker.dart';
 import 'package:sys_control/app/routes/app_router.dart';
 import 'package:sys_control/core/extensions/context_extension.dart';
+import 'package:sys_control/core/extensions/enum_l10n_extension.dart';
 import 'package:sys_control/core/extensions/gesture_extension.dart';
 import 'package:sys_control/features/dashboard/domain/enums/mode_enum.dart';
 import 'package:sys_control/features/schedules/domain/entities/schedule_entity.dart';
@@ -12,6 +14,7 @@ import 'package:sys_control/features/schedules/ui/providers/add_schedule_provide
 import 'package:sys_control/features/schedules/ui/states/add_schedule_state.dart';
 import 'package:sys_control/features/schedules/ui/widgets/repeat_day_bubble.dart';
 import 'package:sys_control/features/schedules/ui/widgets/timer_preset_chip.dart';
+import 'package:sys_control/generated/l10n.dart';
 
 class AddSchedulePage extends ConsumerStatefulWidget {
   const AddSchedulePage({this.schedule, super.key});
@@ -57,7 +60,7 @@ class _AddSchedulePageState extends ConsumerState<AddSchedulePage> {
           onPressed: AppRouter.pop,
         ),
         title: Text(
-          state.isEditing ? 'Edit Schedule' : 'Add Schedule',
+          state.isEditing ? S.of(context).editSchedule : S.of(context).addSchedule,
           style: context.customTheme.blackTextStyle.copyWith(fontSize: 18),
         ),
         centerTitle: true,
@@ -93,7 +96,7 @@ class _AddSchedulePageState extends ConsumerState<AddSchedulePage> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                'Name',
+                S.of(context).name,
                 style: context.customTheme.grayTextStyle.copyWith(fontSize: 12),
               ),
               TextField(
@@ -110,7 +113,7 @@ class _AddSchedulePageState extends ConsumerState<AddSchedulePage> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                'Mode',
+                S.of(context).mode,
                 style: context.customTheme.grayTextStyle.copyWith(fontSize: 12),
               ),
               _buildModeSegmented(state.mode, notifier.setMode),
@@ -144,7 +147,7 @@ class _AddSchedulePageState extends ConsumerState<AddSchedulePage> {
                   ),
                   alignment: Alignment.center,
                   child: Text(
-                    mode.name.toUpperCase(),
+                    mode.shortLabel(S.of(context)).toUpperCase(),
                     style: context.customTheme.grayTextStyle.copyWith(
                       color: isSelected ? mode.color : null,
                       fontSize: 12,
@@ -166,7 +169,7 @@ class _AddSchedulePageState extends ConsumerState<AddSchedulePage> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          'Repeat',
+          S.of(context).repeat,
           style: context.customTheme.grayTextStyle.copyWith(fontSize: 12),
         ),
         Row(
@@ -188,7 +191,7 @@ class _AddSchedulePageState extends ConsumerState<AddSchedulePage> {
                       ),
                       alignment: Alignment.center,
                       child: Text(
-                        type.longName,
+                        type.label(S.of(context)),
                         style: context.customTheme.grayTextStyle.copyWith(
                           color: isSelected ? Colors.white : null,
                           fontSize: 13,
@@ -207,12 +210,13 @@ class _AddSchedulePageState extends ConsumerState<AddSchedulePage> {
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: List.generate(7, (index) {
-              const labels = ['M', 'T', 'W', 'T', 'F', 'S', 'S'];
+              // 2026-01-05 is a Monday; EEEEE = narrow weekday name in the app locale.
+              final label = DateFormat.EEEEE().format(DateTime(2026, 1, 5 + index));
 
               return Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 4),
                 child: RepeatDayBubble(
-                  label: labels[index],
+                  label: label,
                   isSelected: state.repeatDays.contains(index),
                   onTap: () => notifier.toggleRepeatDay(index),
                 ),
@@ -225,10 +229,11 @@ class _AddSchedulePageState extends ConsumerState<AddSchedulePage> {
   }
 
   Widget _buildDateTimeAndTimerRow(AddScheduleState state, AddScheduleNotifier notifier) {
+    final l10n = S.of(context);
     final label = switch (state.repeatType) {
-      RepeatTypeEnum.once => 'Date & Time',
-      RepeatTypeEnum.daily || RepeatTypeEnum.weekly => 'Time',
-      RepeatTypeEnum.monthly => 'Day & Time',
+      RepeatTypeEnum.once => l10n.dateAndTime,
+      RepeatTypeEnum.daily || RepeatTypeEnum.weekly => l10n.time,
+      RepeatTypeEnum.monthly => l10n.dayAndTime,
     };
 
     const presets = [
@@ -265,7 +270,7 @@ class _AddSchedulePageState extends ConsumerState<AddSchedulePage> {
                     Icon(Icons.calendar_today, size: 18, color: context.customTheme.lightGrayTextStyle.color),
                     Expanded(
                       child: Text(
-                        state.startTime != null ? _formatDateTime(state.startTime!, state.repeatType) : 'Select',
+                        state.startTime != null ? _formatDateTime(state.startTime!, state.repeatType) : l10n.select,
                         style: TextStyle(
                           color: state.startTime != null
                               ? context.customTheme.blackTextStyle.color
@@ -288,7 +293,7 @@ class _AddSchedulePageState extends ConsumerState<AddSchedulePage> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                'Timer',
+                l10n.timer,
                 style: context.customTheme.grayTextStyle.copyWith(fontSize: 12),
               ),
               const SizedBox(height: 6),
@@ -305,7 +310,7 @@ class _AddSchedulePageState extends ConsumerState<AddSchedulePage> {
                     const SizedBox(width: 10),
                     Expanded(
                       child: Text(
-                        state.timer > 0 ? _formatDuration(state.timer) : 'Select',
+                        state.timer > 0 ? _formatDuration(state.timer) : l10n.select,
                         style: TextStyle(
                           color: state.timer > 0 ? context.customTheme.blackTextStyle.color : context.customTheme.lightGrayTextStyle.color,
                           fontSize: 14,
@@ -340,34 +345,56 @@ class _AddSchedulePageState extends ConsumerState<AddSchedulePage> {
   Widget _buildPreview(AddScheduleState state) {
     if (state.startTime == null || state.timer <= 0) return const SizedBox.shrink();
 
-    final preview = ref
-        .read(processSchedulesUseCaseProvider)
-        .previewNextOccurrence(
-          ScheduleEntity(
-            id: 0,
-            name: state.name,
-            mode: state.mode,
-            startTime: state.startTime!,
-            timer: state.timer,
-            isEnabled: true,
-            repeatType: state.repeatType,
-            repeatDays: state.repeatDays,
-          ),
-          DateTime.now(),
-        );
+    final now = DateTime.now();
+    final next = ref.read(processSchedulesUseCaseProvider).calculateNextOccurrence(
+      ScheduleEntity(
+        id: 0,
+        name: state.name,
+        mode: state.mode,
+        startTime: state.startTime!,
+        timer: state.timer,
+        isEnabled: true,
+        repeatType: state.repeatType,
+        repeatDays: state.repeatDays,
+      ),
+      now,
+    );
 
-    if (preview.isEmpty) return const SizedBox.shrink();
+    if (next == null) return const SizedBox.shrink();
 
     return Padding(
       padding: const EdgeInsets.only(top: 4),
       child: Text(
-        'Next run: $preview',
+        S.of(context).nextRun(_formatPreview(context, state, next, now)),
         style: context.customTheme.lightGrayTextStyle.copyWith(
           fontSize: 13,
           fontStyle: FontStyle.italic,
         ),
       ),
     );
+  }
+
+  String _formatPreview(BuildContext context, AddScheduleState state, DateTime next, DateTime now) {
+    final l10n = S.of(context);
+    final timeStr = _formatTime(next);
+    final today = DateTime(now.year, now.month, now.day);
+    final nextDate = DateTime(next.year, next.month, next.day);
+
+    if (nextDate == today) return l10n.todayAt(timeStr);
+    if (nextDate == today.add(const Duration(days: 1))) return l10n.tomorrowAt(timeStr);
+
+    return switch (state.repeatType) {
+      RepeatTypeEnum.daily => l10n.everyDayAt(timeStr),
+      RepeatTypeEnum.weekly => state.repeatDays.isEmpty
+          ? l10n.weeklyAt(timeStr)
+          // 2026-01-05 is a Monday; repeatDays indices are Mon=0.
+          : l10n.everyDaysAt(
+              state.repeatDays.map((i) => DateFormat.E().format(DateTime(2026, 1, 5 + i))).join(', '),
+              timeStr,
+            ),
+      RepeatTypeEnum.monthly => l10n.everyMonthDayAt(nextDate.day, timeStr),
+      RepeatTypeEnum.once => l10n.dateAt(DateFormat.yMMMd().format(nextDate), timeStr),
+    };
   }
 
   Widget _buildFooter(AddScheduleState state, AddScheduleNotifier notifier) {
@@ -383,7 +410,7 @@ class _AddSchedulePageState extends ConsumerState<AddSchedulePage> {
               shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
               minimumSize: const Size(0, 45),
             ),
-            child: const Text('Cancel'),
+            child: Text(S.of(context).cancel),
           ),
         ),
         Expanded(
@@ -399,7 +426,7 @@ class _AddSchedulePageState extends ConsumerState<AddSchedulePage> {
               foregroundColor: Colors.white,
               minimumSize: const Size(0, 45),
             ),
-            child: Text(state.isEditing ? 'Update' : 'Save'),
+            child: Text(state.isEditing ? S.of(context).update : S.of(context).save),
           ),
         ),
       ],
@@ -430,7 +457,7 @@ class _AddSchedulePageState extends ConsumerState<AddSchedulePage> {
           backgroundColor: ctx.theme.cardColor,
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)),
           title: Text(
-            'Select Date & Time',
+            S.of(ctx).selectDateTime,
             style: ctx.customTheme.blackTextStyle,
           ),
           content: SizedBox(
@@ -530,7 +557,7 @@ class _AddSchedulePageState extends ConsumerState<AddSchedulePage> {
               style: TextButton.styleFrom(
                 foregroundColor: Colors.grey,
               ),
-              child: const Text('Cancel'),
+              child: Text(S.of(ctx).cancel),
             ),
             ElevatedButton(
               onPressed: () {
@@ -545,7 +572,7 @@ class _AddSchedulePageState extends ConsumerState<AddSchedulePage> {
                 );
                 Navigator.pop(ctx);
               },
-              child: const Text('OK'),
+              child: Text(S.of(ctx).ok),
             ),
           ],
         ),
@@ -564,7 +591,7 @@ class _AddSchedulePageState extends ConsumerState<AddSchedulePage> {
           backgroundColor: ctx.theme.cardColor,
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)),
           title: Text(
-            'Select Time',
+            S.of(ctx).selectTime,
             style: ctx.customTheme.blackTextStyle,
           ),
           content: SizedBox(
@@ -629,7 +656,7 @@ class _AddSchedulePageState extends ConsumerState<AddSchedulePage> {
               style: TextButton.styleFrom(
                 foregroundColor: Colors.grey,
               ),
-              child: const Text('Cancel'),
+              child: Text(S.of(ctx).cancel),
             ),
             ElevatedButton(
               onPressed: () {
@@ -637,7 +664,7 @@ class _AddSchedulePageState extends ConsumerState<AddSchedulePage> {
                 notifier.setStartTime(DateTime(now.year, now.month, now.day, selectedHour, selectedMinute));
                 Navigator.pop(ctx);
               },
-              child: const Text('OK'),
+              child: Text(S.of(ctx).ok),
             ),
           ],
         ),
@@ -657,7 +684,7 @@ class _AddSchedulePageState extends ConsumerState<AddSchedulePage> {
           backgroundColor: ctx.theme.cardColor,
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)),
           title: Text(
-            'Select Day & Time',
+            S.of(ctx).selectDayTime,
             style: ctx.customTheme.blackTextStyle,
           ),
           content: SizedBox(
@@ -744,7 +771,7 @@ class _AddSchedulePageState extends ConsumerState<AddSchedulePage> {
               style: TextButton.styleFrom(
                 foregroundColor: Colors.grey,
               ),
-              child: const Text('Cancel'),
+              child: Text(S.of(ctx).cancel),
             ),
             ElevatedButton(
               onPressed: () {
@@ -752,7 +779,7 @@ class _AddSchedulePageState extends ConsumerState<AddSchedulePage> {
                 notifier.setStartTime(DateTime(now.year, now.month, selectedDay, selectedHour, selectedMinute));
                 Navigator.pop(ctx);
               },
-              child: const Text('OK'),
+              child: Text(S.of(ctx).ok),
             ),
           ],
         ),
@@ -771,7 +798,7 @@ class _AddSchedulePageState extends ConsumerState<AddSchedulePage> {
           backgroundColor: ctx.theme.cardColor,
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)),
           title: Text(
-            'Select Duration',
+            S.of(ctx).selectDuration,
             style: ctx.customTheme.blackTextStyle,
           ),
           content: SizedBox(
@@ -832,14 +859,14 @@ class _AddSchedulePageState extends ConsumerState<AddSchedulePage> {
               style: TextButton.styleFrom(
                 foregroundColor: Colors.grey,
               ),
-              child: const Text('Cancel'),
+              child: Text(S.of(ctx).cancel),
             ),
             ElevatedButton(
               onPressed: () {
                 notifier.setTimer(selectedMinutes * 60 + selectedSeconds);
                 Navigator.pop(ctx);
               },
-              child: const Text('OK'),
+              child: Text(S.of(ctx).ok),
             ),
           ],
         ),
@@ -847,14 +874,16 @@ class _AddSchedulePageState extends ConsumerState<AddSchedulePage> {
     );
   }
 
+  String _formatTime(DateTime dt) => '${dt.hour.toString().padLeft(2, '0')}:${dt.minute.toString().padLeft(2, '0')}';
+
   String _formatDateTime(DateTime dt, RepeatTypeEnum repeatType) {
-    const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-    final timeStr = '${dt.hour.toString().padLeft(2, '0')}:${dt.minute.toString().padLeft(2, '0')}';
+    final l10n = S.of(context);
+    final timeStr = _formatTime(dt);
 
     return switch (repeatType) {
-      RepeatTypeEnum.once => '${months[dt.month - 1]} ${dt.day}, ${dt.year}  $timeStr',
+      RepeatTypeEnum.once => '${DateFormat.yMMMd().format(dt)}  $timeStr',
       RepeatTypeEnum.daily || RepeatTypeEnum.weekly => timeStr,
-      RepeatTypeEnum.monthly => 'Day ${dt.day}  $timeStr',
+      RepeatTypeEnum.monthly => '${l10n.dayNumber(dt.day)}  $timeStr',
     };
   }
 

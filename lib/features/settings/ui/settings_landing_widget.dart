@@ -7,6 +7,7 @@ import 'package:sys_control/core/extensions/widget_extension.dart';
 import 'package:sys_control/features/dashboard/ui/providers/device_simulator_provider.dart';
 import 'package:sys_control/features/settings/ui/providers/settings_categories_provider.dart';
 import 'package:sys_control/features/settings/ui/widgets/setting_icons.dart';
+import 'package:sys_control/features/settings/ui/widgets/setting_translation.dart';
 import 'package:sys_control/generated/l10n.dart';
 
 class SettingsLandingWidget extends ConsumerWidget {
@@ -42,7 +43,7 @@ class SettingsLandingWidget extends ConsumerWidget {
                         final category = categories[index];
                         return _CategoryTile(
                           icon: settingCategoryIcon(category.icon),
-                          title: category.label,
+                          title: settingLabel(S.of(context), category.label),
                           onTap: () {
                             AppRouter.pushNamed(
                               RouteEnum.settingsCategoryScreen.name,

@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:sys_control/app/themes/colors.dart';
 import 'package:sys_control/core/extensions/context_extension.dart';
+import 'package:sys_control/core/extensions/enum_l10n_extension.dart';
 import 'package:sys_control/features/dashboard/domain/enums/fan_speed_enum.dart';
 import 'package:sys_control/features/dashboard/domain/enums/mode_enum.dart';
+import 'package:sys_control/generated/l10n.dart';
 
 class ModeFanChip extends StatelessWidget {
   const ModeFanChip({
@@ -29,13 +31,13 @@ class ModeFanChip extends StatelessWidget {
       spacing: 12,
       children: [
         _Chip(
-          label: mode.longName,
+          label: mode.label(S.of(context)),
           color: mode.color,
           icon: Icons.thermostat_rounded,
           onTap: onModeTap,
         ),
         _Chip(
-          label: fanSpeed.name.toUpperCase(),
+          label: fanSpeed.label(S.of(context)).toUpperCase(),
           color: context.customTheme.grayTextStyle.color!,
           icon: Icons.air_rounded,
           onTap: onFanTap,
