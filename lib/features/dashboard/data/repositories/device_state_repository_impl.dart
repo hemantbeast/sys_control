@@ -32,7 +32,7 @@ final class DeviceStateRepositoryImpl extends DeviceStateRepository {
         unitType: Value(device.unitType),
         temperature: Value(device.temperature),
         humidity: Value(device.humidity),
-        targetTemp: Value(device.targetTemp),
+        targetTemp: Value(_roundToTenth(device.targetTemp)),
         mode: Value(device.mode),
         fanSpeed: Value(device.fanSpeed),
         isOn: Value(device.isOn),
@@ -56,7 +56,7 @@ final class DeviceStateRepositoryImpl extends DeviceStateRepository {
       DeviceStateTableCompanion(
         unitId: Value(unitId),
         unitType: Value(unitType),
-        targetTemp: targetTemp == null ? const Value.absent() : Value(targetTemp),
+        targetTemp: targetTemp == null ? const Value.absent() : Value(_roundToTenth(targetTemp)),
         mode: mode == null ? const Value.absent() : Value(mode),
         fanSpeed: fanSpeed == null ? const Value.absent() : Value(fanSpeed),
         isOn: isOn == null ? const Value.absent() : Value(isOn),
@@ -66,6 +66,8 @@ final class DeviceStateRepositoryImpl extends DeviceStateRepository {
       ),
     );
   }
+
+  double _roundToTenth(double value) => double.parse(value.toStringAsFixed(1));
 
   DeviceStateEntity _toEntity(DeviceStateRow row) {
     return DeviceStateEntity(
